@@ -1,6 +1,7 @@
 package in.fssa.missnature.validator;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import in.fssa.missnature.util.*;
 import in.fssa.missnature.exception.ValidationException;
-import in.fssa.missnature.model.MissNatureValidatorErrors;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.util.StringUtil;
 
@@ -19,12 +19,10 @@ public class UserValidator {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
     private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
 
-
-
 	public  void validate(User user) throws ValidationException,IllegalArgumentException {
 		
 		if (user == null) {
-			throw new ValidationException(MissNatureValidatorErrors.USER_NAME);
+			throw new ValidationException("Invalid User object");
 		}
 
         validateName(user.getName());
@@ -116,7 +114,7 @@ public class UserValidator {
         StringUtil.rejectIfInvalidString(name, "Name");
         
         if (!Pattern.matches(NAME_PATTERN, name)) {
-            throw new ValidationException("Name does not match the pattern");
+            throw new ValidationException("Name should match the pattern");
         }
     
     }

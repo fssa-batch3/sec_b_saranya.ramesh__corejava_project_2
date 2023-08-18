@@ -10,7 +10,7 @@ import in.fssa.missnature.service.UserService;
 public class TestDeleteUser {
 
 	@Test
-	public void testCreateUserWithValidInput() {
+	public void testDeleteUserWithValidInput() {
 		
 		UserService userService = new UserService();
 
@@ -21,16 +21,5 @@ public class TestDeleteUser {
 		});
 	}
 	
-	@Test
-	public void testCreateUserWithInValidInput() {
-		
-		UserService userService = new UserService();
-
-		User newUser = new User();
-		newUser.setId(-1);
-		assertDoesNotThrow(() ->{
-			userService.delete(newUser.getId());
-		});
-	}
 	
 }

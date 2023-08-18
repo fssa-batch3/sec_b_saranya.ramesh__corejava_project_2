@@ -7,6 +7,6 @@ import in.fssa.missnature.model.User;
 
 public interface CategoryInterface extends CategoryBase <Category>{
 
-	public abstract Set<Category> listAllCategroyByCategoryId(int categoryId);
+	//public abstract Set<Category> listAllCategroyByCategoryId(int categoryId);
 	
 }

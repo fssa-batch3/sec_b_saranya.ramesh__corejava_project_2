@@ -15,15 +15,6 @@ public class CategoryService {
 		categoryDao.create(newcategory);
 	}
 	
-	public void delete(int categoryId) throws Exception{
-		
-		CategoryValidator.validateId(categoryId);
-		
-		CategoryDAO categoryDao = new CategoryDAO();
-		
-		categoryDao.delete(categoryId);
-	}
-	
 	public void updateCategoryName(int id, String newCategoryName)throws Exception{
 		
 		CategoryValidator.validateId(id);

@@ -10,7 +10,7 @@ import in.fssa.missnature.service.ProductService;
 public class GetAllProducts {
 
 	@Test
-	public void getAllProductsByCategoryId() {
+	 void getAllProductsByCategoryId() {
 	    ProductService productService = new ProductService();
 	    Set<Product> products;
 	    try {
@@ -22,7 +22,7 @@ public class GetAllProducts {
 	}
 
 	@Test
-	public void getProductDetailsByProductId() {
+	 void getProductDetailsByProductId() {
 		
 		 ProductService productService = new ProductService();
 		 
@@ -36,7 +36,7 @@ public class GetAllProducts {
 	}
 	
 	@Test
-	public void getAll() {
+	 void getAll(){
 		ProductService productService = new ProductService();
 		Set<Product> AllProducts;
 		try {

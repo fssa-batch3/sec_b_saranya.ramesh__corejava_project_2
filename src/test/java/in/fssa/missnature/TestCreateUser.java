@@ -1,16 +1,12 @@
 package in.fssa.missnature;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import in.fssa.missnature.model.MissNatureValidatorErrors;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.service.UserService;
 import in.fssa.missnature.exception.ValidationException;
-
  class TestCreateUser {
 
 	@Test
@@ -30,21 +26,15 @@ import in.fssa.missnature.exception.ValidationException;
 	
 	@Test    
 	 void testCreateUserWithInvalidInput(){
-		try {
+		
 			UserService userService = new UserService();
-			userService.create(null);
-		}
-		catch(ValidationException ex ) {
-			Assertions.assertEquals(MissNatureValidatorErrors.USER_NAME, ex.getMessage());
-		} 
-		catch(Exception ex) {
-			Assertions.assertEquals(MissNatureValidatorErrors.USER_NAME,ex.getMessage());
-		}
-	
-//		String expectedMessage = "Invalid User input";
-//		String actualMessage = exception.getMessage();
-//		assertTrue(expectedMessage.equals(actualMessage));
-//		System.out.println(actualMessage);
+			Exception exception = assertThrows(ValidationException.class, () ->{
+				userService.create(null);
+			});
+		String expectedMessage = "Invalid User object";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+		System.out.println(actualMessage);
 	}
 	@Test
 	 void testCreateUserWithEmailNull() {
@@ -158,7 +148,7 @@ import in.fssa.missnature.exception.ValidationException;
 		Exception exception = assertThrows(ValidationException.class, () ->{
 		userService.create(newUser);
 	});
-	String expectedMessage = "Name does not match the pattern";
+	String expectedMessage = "Name should match the pattern";
 	String actualMessage = exception.getMessage();
 	System.out.println(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));	

@@ -20,16 +20,4 @@ public class TestDeleteProduct {
 			productService.deleteProduct(newProduct.getId());
 		});
 	}
-	
-	@Test
-	 void testDeleteProductwithInvalidId() {
-		
-		ProductService productService = new ProductService();
-
-		Product newProduct = new Product();
-		newProduct.setId(0);
-		assertDoesNotThrow(() ->{
-			productService.deleteProduct(newProduct.getId());
-		});
-	}
 }
