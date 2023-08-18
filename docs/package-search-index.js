@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"in.fssa.missnature.dao"},{"l":"in.fssa.missnature.exception"},{"l":"in.fssa.missnature.interfacesfile"},{"l":"in.fssa.missnature.model"},{"l":"in.fssa.missnature.service"},{"l":"in.fssa.missnature.validator"}];updateSearchResults();

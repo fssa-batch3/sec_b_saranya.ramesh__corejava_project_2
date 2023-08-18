@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-
 import java.util.regex.Pattern;
 import in.fssa.missnature.util.*;
 import in.fssa.missnature.exception.ValidationException;
@@ -19,6 +17,12 @@ public class UserValidator {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
     private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
 
+    /**
+     * 
+     * @param user
+     * @throws ValidationException
+     * @throws IllegalArgumentException
+     */
 	public  void validate(User user) throws ValidationException,IllegalArgumentException {
 		
 		if (user == null) {
@@ -32,7 +36,11 @@ public class UserValidator {
 
     }
 
-	
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public  void validateUser(int id)throws ValidationException{
 		
 		if(id < 0) {
@@ -67,7 +75,11 @@ public class UserValidator {
 
 	}
 	
-    
+    /**
+     * 
+     * @param mobileNumber
+     * @throws ValidationException
+     */
     public  void validateMobileNumber(long mobileNumber) throws ValidationException{
         
         String phno = String.valueOf(mobileNumber);
@@ -118,7 +130,11 @@ public class UserValidator {
         }
     
     }
-    
+    /**
+     * 
+     * @param email
+     * @throws ValidationException
+     */
     public  void validateEmail(String email) throws ValidationException {
         
         StringUtil.rejectIfInvalidString(email, "Email");
@@ -155,7 +171,11 @@ public class UserValidator {
             ConnectionUtil.close(con, ps, rs);   
         }
     }
-    
+    /**
+     * 
+     * @param password
+     * @throws ValidationException
+     */
     public  void validatePassword(String password) throws ValidationException {
         
         StringUtil.rejectIfInvalidString(password, "Password");

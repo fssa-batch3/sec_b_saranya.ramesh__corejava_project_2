@@ -7,7 +7,11 @@ import in.fssa.missnature.model.Product;
 import in.fssa.missnature.validator.ProductValidator;
 
 public class ProductService {
-
+/**
+ * 
+ * @return
+ * @throws Exception
+ */
 	public Set<Product> listAllProduct()throws Exception{
 		
 		ProductDAO product = new ProductDAO();
@@ -15,7 +19,12 @@ public class ProductService {
 		
 		return allProducts;
 	}
-	
+	/**
+	 * 
+	 * @param category_id
+	 * @return
+	 * @throws Exception
+	 */
 	public Set<Product> findProductDetailByCategoryId(int category_id) throws Exception {
 	    ProductValidator validator = new ProductValidator();
 	    validator.validateCategoryId(category_id);
@@ -25,7 +34,12 @@ public class ProductService {
 	    
 	    return products;
 	}
-	
+	/**
+	 * 
+	 * @param product_id
+	 * @return
+	 * @throws Exception
+	 */
 	public Product FindProductDetailsByProductId(int product_id)throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
@@ -37,7 +51,12 @@ public class ProductService {
 		return product;
 		
 	}
-
+/**
+ * 
+ * @param id
+ * @param price
+ * @throws Exception
+ */
 	public void updateProductPrice(int id, int price)throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
@@ -48,7 +67,11 @@ public class ProductService {
 		productDAO.updatePrice(id, price);
 		
 	}
-	
+	/**
+	 * 
+	 * @param product
+	 * @throws Exception
+	 */
 	public void updateProduct(Product product) throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
@@ -67,7 +90,11 @@ public class ProductService {
 		productDAO.updateProduct(product);
 		
 	}
-	
+	/**
+	 * 
+	 * @param product
+	 * @throws Exception
+	 */
 	public void createProduct(Product product)throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
@@ -77,7 +104,11 @@ public class ProductService {
 		productDAO.create(product);
 		
 	}
-	
+	/**
+	 * 
+	 * @param productId
+	 * @throws Exception
+	 */
 	public void deleteProduct(int productId) throws Exception{
 		
 		ProductValidator validator = new ProductValidator();

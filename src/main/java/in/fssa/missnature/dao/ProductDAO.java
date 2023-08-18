@@ -13,6 +13,12 @@ import in.fssa.missnature.util.ConnectionUtil;
 
 public class ProductDAO implements ProductInterface {
 
+	/**
+	 * Creates a new product in the database.
+	 *
+	 * @param product The Product object containing the information for the new product.
+	 * @throws RuntimeException if there's an issue with database connectivity or SQL execution.
+	 */
 	@Override
 	public void create(Product product) {
 		
@@ -47,7 +53,12 @@ public class ProductDAO implements ProductInterface {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-	
+	/**
+	 * Updates the details of a product in the database.
+	 *
+	 * @param product The Product object containing the updated information for the product.
+	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if the update fails.
+	 */
 	@Override
 	public void updateProduct(Product product ) {
 		
@@ -90,6 +101,13 @@ public class ProductDAO implements ProductInterface {
 		}
 }
 
+	/**
+	 * Updates the price of a product in the database based on its ID.
+	 *
+	 * @param id The ID of the product whose price is to be updated.
+	 * @param price The new price to be assigned to the product.
+	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if the update fails.
+	 */
 	@Override
 	public void updatePrice(int id, int price) {
 		
@@ -115,6 +133,12 @@ public class ProductDAO implements ProductInterface {
 		}
 	}
 
+	/**
+	 * Deletes a product from the database based on its ID.
+	 *
+	 * @param id The ID of the product to be deleted.
+	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if the deletion fails.
+	 */
 	@Override
 	public void deleteProduct(int id) {
 		
@@ -138,7 +162,13 @@ public class ProductDAO implements ProductInterface {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-
+	
+	/**
+	 * Retrieves a set of all products from the database.
+	 *
+	 * @return A set containing all products retrieved from the database.
+	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or result retrieval.
+	 */
 	@Override
 	public Set<Product> listAllProducts() {
 
@@ -225,6 +255,13 @@ public class ProductDAO implements ProductInterface {
 		
 	}
 
+	/**
+	 * Retrieves product details based on the given product ID.
+	 *
+	 * @param productId The ID of the product whose details are to be retrieved.
+	 * @return The Product object containing the details of the product.
+	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or result retrieval.
+	 */
 	@Override
 	public Product findProductDetailsByProductId(int productId) {
 		

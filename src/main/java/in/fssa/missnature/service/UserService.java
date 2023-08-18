@@ -5,7 +5,12 @@ import in.fssa.missnature.model.User;
 import in.fssa.missnature.validator.UserValidator;
 
 public class UserService {
-
+	
+/**
+ * 
+ * @param newUser
+ * @throws Exception
+ */
 	public void create(User newUser) throws Exception {
 		
 		UserValidator userValidator = new UserValidator();
@@ -16,7 +21,11 @@ public class UserService {
 					
 			userDao.create(newUser);
 	}
-
+/**
+ * 
+ * @param id
+ * @throws Exception
+ */
 	public void delete(int id)throws Exception{
 	
 		UserValidator userValidator = new UserValidator();
@@ -27,6 +36,12 @@ public class UserService {
 			
 			userDao1.delete(id);
 }
+	/**
+	 * 
+	 * @param id
+	 * @param newName
+	 * @throws Exception
+	 */
 	public void updateName (int id, String newName)throws Exception{
 		
 		UserValidator userValidator = new UserValidator();
@@ -39,6 +54,12 @@ public class UserService {
 		userDao1.updateName(id, newName);
 		
 	}
+/**
+ * 	
+ * @param id
+ * @param newPassword
+ * @throws Exception
+ */
 	
 	public void updatePassword (int id, String newPassword)throws Exception{
 		

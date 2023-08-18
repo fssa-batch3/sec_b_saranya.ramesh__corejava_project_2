@@ -13,6 +13,11 @@ import in.fssa.missnature.util.ConnectionUtil;
 
 public class CategoryValidator {
 
+	/**
+	 * 
+	 * @param category
+	 * @throws ValidationException
+	 */
 	public static void validateCategory(Category category) throws ValidationException{
 		
 		if (category == null) {
@@ -51,6 +56,11 @@ public class CategoryValidator {
 		validateName(category.getName());
 	}
 	
+	/**
+	 * 
+	 * @param Categoryname
+	 * @throws ValidationException
+	 */
 	public static void validateName(String Categoryname) throws ValidationException{
 		
 		if(Categoryname == null || "".equals(Categoryname.trim())) {

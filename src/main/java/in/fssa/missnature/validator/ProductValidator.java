@@ -15,6 +15,11 @@ public class ProductValidator {
 
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\s]*$";
 	
+	/**
+	 * 
+	 * @param product
+	 * @throws ValidationException
+	 */
 	public void validateProduct(Product product) throws ValidationException{
 		
 		if(product == null) {
@@ -56,6 +61,12 @@ public class ProductValidator {
 		
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @throws ValidationException
+	 */
+	
 	public  void validateName(String name) throws ValidationException {
         
         StringUtil.rejectIfInvalidString(name, "Name");
@@ -66,43 +77,88 @@ public class ProductValidator {
     
     }
 	
+	/**
+	 * 
+	 * @param description
+	 * @throws ValidationException
+	 */
 	public void validateDescription(String description)throws ValidationException{
 		
 		StringUtil.rejectIfInvalidString(description, "description");
 	}
+	/**
+	 * 
+	 * @param ingredients
+	 * @throws ValidationException
+	 */
 	public void validateIngredients(String ingredients)throws ValidationException{
 		
 		StringUtil.rejectIfInvalidString(ingredients, "Ingredients");
 	}
+	/**
+	 * 
+	 * @param benefits
+	 * @throws ValidationException
+	 */
 	public void validateBenefits(String benefits)throws ValidationException{
 		
 		StringUtil.rejectIfInvalidString(benefits, "Benefits");
 	}
+	/**
+	 * 
+	 * @param howToUse
+	 * @throws ValidationException
+	 */
 	public void validateHowToUse(String howToUse)throws ValidationException{
 		
 		StringUtil.rejectIfInvalidString(howToUse, "HowToUse");
 	}
+	/**
+	 * 
+	 * @param shelfLife
+	 * @throws ValidationException
+	 */
 	public void validateShelfLife(String shelfLife)throws ValidationException{
 		
 		StringUtil.rejectIfInvalidString(shelfLife, "ShelfLife");
 	}
+	/**
+	 * 
+	 * @param weight
+	 * @throws ValidationException
+	 */
 	public void validateWeight(int weight)throws ValidationException{
 		
 		if(weight < 0) {
 			throw new ValidationException("Weight cannot be zero or negative");
 		}
 	}
+	/**
+	 * 
+	 * @param price
+	 * @throws ValidationException
+	 */
 	public void validatePrice(int price)throws ValidationException{
 		
 		if(price < 0) {
 			throw new ValidationException("Price cannot be negative or zero");
 		}
 	}
+	/**
+	 * 
+	 * @param productId
+	 * @throws ValidationException
+	 */
 	public void validateProductId1(int productId)throws ValidationException{
 		if(productId < 0) {
 			throw new ValidationException("Id cannot be negative or zero");
 		}
 	}
+	/**
+	 * 
+	 * @param productId
+	 * @throws ValidationException
+	 */
 	public void validateProductId(int productId)throws ValidationException{
 		
 		if(productId <= 0) {
@@ -137,6 +193,11 @@ public class ProductValidator {
        }
 	}
 	
+	/**
+	 * 
+	 * @param categoryId
+	 * @throws ValidationException
+	 */
 	public void validateCategoryId(int categoryId)throws ValidationException{
 		
 		 if (categoryId <= 0) {

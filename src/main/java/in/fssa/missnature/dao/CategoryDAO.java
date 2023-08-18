@@ -11,6 +11,12 @@ import in.fssa.missnature.util.ConnectionUtil;
 
 public class CategoryDAO implements CategoryInterface{
 
+	/**
+	 * Creates a new category in the database.
+	 *
+	 * @param category The Category object containing the information for the new category.
+	 * @throws RuntimeException if there's an issue with database connectivity or SQL execution.
+	 */
 	@Override
 	public void create(Category category) {
 		Connection conn = null;
@@ -35,7 +41,13 @@ public class CategoryDAO implements CategoryInterface{
 			ConnectionUtil.close(conn, ps);
 		}
 	}
-	
+	/**
+	 * Updates the name of a category in the database based on its ID.
+	 *
+	 * @param id The ID of the category to be updated.
+	 * @param categoryName The new name to be assigned to the category.
+	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if no rows were affected.
+	 */
 	@Override
 	public void updateName(int id, String categoryName) {
 

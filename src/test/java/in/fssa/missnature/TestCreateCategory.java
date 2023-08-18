@@ -21,7 +21,7 @@ public class TestCreateCategory {
 		CategoryService categoryService = new CategoryService();
 
 		Category newCategory = new Category();
-		newCategory.setName("saran");
+		newCategory.setName("bodyCare");
 		assertDoesNotThrow(() ->{
 			categoryService.create(newCategory);
 		});
