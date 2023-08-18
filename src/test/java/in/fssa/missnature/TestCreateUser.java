@@ -11,18 +11,18 @@ import in.fssa.missnature.model.User;
 import in.fssa.missnature.service.UserService;
 import in.fssa.missnature.exception.ValidationException;
 
-public class TestCreateUser {
+ class TestCreateUser {
 
 	@Test
-	public void testCreateUserWithValidInput() {
+	 void testCreateUserWithValidInput() {
 		
 		UserService userService = new UserService();
 
 		User newUser = new User();
-		newUser.setEmail("viji@gmail.com");
-		newUser.setName("viji");
-		newUser.setPassword("Viji@123");
-		newUser.setMobile_number(6586456743l);
+		newUser.setEmail("subi@gmail.com");
+		newUser.setName("subi");
+		newUser.setPassword("Subi@123");
+		newUser.setMobile_number(7586126773l);
 		assertDoesNotThrow(() ->{
 			userService.create(newUser);
 		});
@@ -47,7 +47,7 @@ public class TestCreateUser {
 //		System.out.println(actualMessage);
 	}
 	@Test
-	public void testCreateUserWithEmailNull() {
+	 void testCreateUserWithEmailNull() {
 		
 		
 		UserService userService = new UserService();
@@ -67,7 +67,7 @@ public class TestCreateUser {
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 	@Test
-	public void testCreateUserWithEmailEmpty() {
+	 void testCreateUserWithEmailEmpty() {
 		
 		UserService userService = new UserService();
 		
@@ -86,7 +86,7 @@ public class TestCreateUser {
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 	@Test
-	public void testCreateUserWithInvalidEmail() {
+	void testCreateUserWithInvalidEmail() {
 		
 		UserService userService = new UserService();
 		
@@ -106,7 +106,7 @@ public class TestCreateUser {
 }
 	
 	@Test
-	public void testCreateUserWithNameNull() {
+	 void testCreateUserWithNameNull() {
 		
 		UserService userService = new UserService();
 		
@@ -125,7 +125,7 @@ public class TestCreateUser {
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 	@Test
-	public void testCreateUserWithNameEmpty() {
+	 void testCreateUserWithNameEmpty() {
 		
 		UserService userService = new UserService();
 		
@@ -144,7 +144,7 @@ public class TestCreateUser {
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 	@Test
-	public void testCreateUserWithInValidName() {
+	 void testCreateUserWithInValidName() {
 		
 		UserService userService = new UserService();
 		
@@ -165,7 +165,7 @@ public class TestCreateUser {
 }
 	
 	@Test
-	public void testCreateUserWithPasswordNull() {
+	 void testCreateUserWithPasswordNull() {
 		
 		UserService userService = new UserService();
 		
@@ -186,7 +186,7 @@ public class TestCreateUser {
 }
 	
 	@Test
-	public void testCreateUserWithPasswordEmpty() {
+	 void testCreateUserWithPasswordEmpty() {
 		
 		UserService userService = new UserService();
 		
@@ -205,7 +205,7 @@ public class TestCreateUser {
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 	@Test
-	public void testCreateUserWithInvalidPassword() {
+	 void testCreateUserWithInvalidPassword() {
 		
 		UserService userService = new UserService();
 		
@@ -225,7 +225,7 @@ public class TestCreateUser {
 	assertTrue(expectedMessage.equals(actualMessage));
 } 
 	@Test
-	public void testCreateUserWithInvalidMobileNumber() {
+	 void testCreateUserWithInvalidMobileNumber() {
 		
 		UserService userService = new UserService();
 		

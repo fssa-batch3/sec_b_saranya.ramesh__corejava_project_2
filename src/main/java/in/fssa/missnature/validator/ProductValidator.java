@@ -86,9 +86,11 @@ public class ProductValidator {
 		
 		StringUtil.rejectIfInvalidString(shelfLife, "ShelfLife");
 	}
-	public void validateWeight(String weight)throws ValidationException{
+	public void validateWeight(int weight)throws ValidationException{
 		
-		StringUtil.rejectIfInvalidString(weight, "weight");
+		if(weight < 0) {
+			throw new ValidationException("Weight cannot be zero or negative");
+		}
 	}
 	public void validatePrice(int price)throws ValidationException{
 		

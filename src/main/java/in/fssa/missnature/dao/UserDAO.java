@@ -57,7 +57,7 @@ public class UserDAO implements UserInterface{
 				System.out.println("Password updated successfully");
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();	
+			throw new RuntimeException(e);	
 		}
 		
 	}
@@ -90,7 +90,7 @@ public class UserDAO implements UserInterface{
 
 	@Override
 	public void updateName(int id, String newName) {
-		// TODO Auto-generated method stub
+
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
@@ -106,7 +106,7 @@ public class UserDAO implements UserInterface{
 				System.out.println("Name updated successfully");
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();	
+			throw new RuntimeException(e);	
 		}
 		
 	}

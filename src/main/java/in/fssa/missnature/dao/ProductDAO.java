@@ -20,18 +20,19 @@ public class ProductDAO implements ProductInterface {
 		PreparedStatement ps = null;
 
 		try {
-			String query = "INSERT INTO products (name,category_id, description, product_weight, price, ingredients, benefits, how_to_use, shelf_life) VALUES (?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO products (name,category_id, description, product_weight,quantity_unit, price, ingredients, benefits, how_to_use, shelf_life) VALUES (?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1,product.getName());
 			ps.setInt(2, product.getCategory_id());
 			ps.setString(3, product.getDescription());
-			ps.setString(4, product.getProduct_weight());
-			ps.setInt(5, product.getPrice());
-			ps.setString(6, product.getIngredients());
-			ps.setString(7, product.getBenefits());
-			ps.setString(8, product.getHow_to_use());
-			ps.setString(9, product.getShelf_life());
+			ps.setInt(4, product.getProduct_weight());
+			ps.setString(5, product.getQuantity_unit().toString());
+			ps.setInt(6, product.getPrice());
+			ps.setString(7, product.getIngredients());
+			ps.setString(8, product.getBenefits());
+			ps.setString(9, product.getHow_to_use());
+			ps.setString(10, product.getShelf_life());
 			
 			ps.executeUpdate();
 			
@@ -47,38 +48,36 @@ public class ProductDAO implements ProductInterface {
 		}
 	}
 	
-
 	@Override
-	public void updateProduct(int productId, String name, int categoryId, String description,
-            String productWeight, int price, String ingredients,
-            String benefits, String howToUse, String shelfLife) {
+	public void updateProduct(Product product ) {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
 		String query = "UPDATE products SET name = ?, category_id = ?, description = ?, "
-		       + "product_weight = ?, price = ?, ingredients = ?, benefits = ?, "
+		       + "product_weight = ?,quantity_unit =?, ingredients = ?, benefits = ?, "
 		       + "how_to_use = ?, shelf_life = ? WHERE id = ?";
 		conn = ConnectionUtil.getConnection();
 		ps = conn.prepareStatement(query);
-		ps.setString(1, name);
-		ps.setInt(2, categoryId);
-		ps.setString(3, description);
-		ps.setString(4, productWeight);
-		ps.setDouble(5, price);
-		ps.setString(6, ingredients);
-		ps.setString(7, benefits);
-		ps.setString(8, howToUse);
-		ps.setString(9, shelfLife);
-		ps.setInt(10, productId);
+		ps.setString(1, product.getName());
+		ps.setInt(2, product.getCategory_id());
+		ps.setString(3, product.getDescription());
+		ps.setInt(4, product.getProduct_weight());
+		ps.setString(5, product.getQuantity_unit().toString());
+		ps.setString(6, product.getIngredients());
+		ps.setString(7, product.getBenefits());
+		ps.setString(8, product.getHow_to_use());
+		ps.setString(9, product.getShelf_life());
+		ps.setInt(10, product.getId());
+		
 		
 		int rowsAffected = ps.executeUpdate();
 		
 		if (rowsAffected > 0) {
-		System.out.println("Product with ID " + productId + " updated successfully");
+		System.out.println("Product updated successfully");
 		} else {
-		System.out.println("No product found with ID " + productId);
+		System.out.println("product updation fails");
 		}
 		
 		} catch (SQLException e) {
@@ -90,7 +89,6 @@ public class ProductDAO implements ProductInterface {
 		ConnectionUtil.close(conn, ps);
 		}
 }
-
 
 	@Override
 	public void updatePrice(int id, int price) {
@@ -167,7 +165,8 @@ public class ProductDAO implements ProductInterface {
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
 				product.setShelf_life(rs.getString("shelf_life"));
-				product.setProduct_weight(rs.getString("product_weight"));
+				product.setProduct_weight(rs.getInt("product_weight"));
+				product.setQuantity_unit(Product.QuantityUnit.valueOf(rs.getString("quantity_unit")));
 				
 				allProducts.add(product);
 			}
@@ -209,7 +208,8 @@ public class ProductDAO implements ProductInterface {
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
 				product.setShelf_life(rs.getString("shelf_life"));
-				product.setProduct_weight(rs.getString("product_weight"));
+				product.setProduct_weight(rs.getInt("Product_weight"));
+				product.setQuantity_unit(Product.QuantityUnit.valueOf(rs.getString("quantity_unit")));
 				
 				listOfProductsByCategoryId.add(product);
 			}
@@ -253,7 +253,10 @@ public class ProductDAO implements ProductInterface {
 				product.setHow_to_use(rs.getString("how_to_use"));
 				product.setShelf_life(rs.getString("shelf_life"));
 				product.setPrice(rs.getInt("price"));
+				product.setProduct_weight(rs.getInt("Product_weight"));
+				product.setQuantity_unit(Product.QuantityUnit.valueOf(rs.getString("quantity_unit")));
 				product.setCategory_id(rs.getInt("category_id"));
+				
 				
 			}
 		} catch(SQLException e) {
@@ -266,5 +269,6 @@ public class ProductDAO implements ProductInterface {
 		}
 		return product;
 		}
+
 	
 }

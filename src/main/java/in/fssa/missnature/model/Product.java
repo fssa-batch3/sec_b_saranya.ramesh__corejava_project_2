@@ -5,7 +5,7 @@ public class Product {
 	private int id;
 	private String name;
 	private String description;
-	private String product_weight;
+	private int product_weight;
 	private String ingredients;
 	private String benefits;
 	private String shelf_life;
@@ -14,7 +14,18 @@ public class Product {
 	private int category_id;
 	private String created_at;
 	private String modified_at;
+	private QuantityUnit quantity_unit;
+
+	public enum QuantityUnit{
+		G, ML
+	}
 	
+	public QuantityUnit getQuantity_unit() {
+		return quantity_unit;
+	}
+	public void setQuantity_unit(QuantityUnit quantity_unit) {
+		this.quantity_unit = quantity_unit;
+	}
 	public int getId() {
 		return id;
 	}
@@ -33,10 +44,10 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getProduct_weight() {
+	public int getProduct_weight() {
 		return product_weight;
 	}
-	public void setProduct_weight(String product_weight) {
+	public void setProduct_weight(int product_weight) {
 		this.product_weight = product_weight;
 	}
 	public String getIngredients() {
@@ -92,7 +103,8 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", product_weight="
 				+ product_weight + ", ingredients=" + ingredients + ", benefits=" + benefits + ", shelf_life="
-				+ shelf_life + ", price=" + price + ", category_id=" + category_id + ", created_at=" + created_at
-				+ ", modified_at=" + modified_at + "]";
+				+ shelf_life + ", how_to_use=" + how_to_use + ", price=" + price + ", category_id=" + category_id
+				+ ", created_at=" + created_at + ", modified_at=" + modified_at + ", quantity_unit=" + quantity_unit
+				+ "]";
 	}
 }

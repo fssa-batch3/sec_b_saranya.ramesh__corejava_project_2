@@ -37,7 +37,7 @@ public class ProductService {
 		return product;
 		
 	}
-	
+
 	public void updateProductPrice(int id, int price)throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
@@ -46,6 +46,25 @@ public class ProductService {
 		
 		ProductDAO productDAO = new ProductDAO();
 		productDAO.updatePrice(id, price);
+		
+	}
+	
+	public void updateProduct(Product product) throws Exception{
+		
+		ProductValidator validator = new ProductValidator();
+		
+		validator.validateProductId(product.getId());
+		validator.validateName(product.getName());
+		validator.validateCategoryId(product.getCategory_id());
+		validator.validateDescription(product.getDescription());
+		validator.validateWeight(product.getProduct_weight());
+		validator.validateIngredients(product.getIngredients());
+		validator.validateBenefits(product.getBenefits());
+		validator.validateHowToUse(product.getHow_to_use());
+		validator.validateShelfLife(product.getShelf_life());
+		
+		ProductDAO productDAO = new ProductDAO();
+		productDAO.updateProduct(product);
 		
 	}
 	
