@@ -21,12 +21,11 @@ public class TestCreateCategory {
 		CategoryService categoryService = new CategoryService();
 
 		Category newCategory = new Category();
-		newCategory.setName("bodyCare");
+		newCategory.setName("foot Care");
 		assertDoesNotThrow(() ->{
 			categoryService.create(newCategory);
 		});
 	}
-	
 	@Test    
 	public void testCreateCategoryWithInvalidInput() {
 		CategoryService categoryService = new CategoryService();
@@ -40,7 +39,7 @@ public class TestCreateCategory {
 	}
 	
 	@Test
-	public void testCreateUserWithNameNull() {
+	public void testCreateCategoryWithNameNull() {
 		
 		CategoryService categoryService = new CategoryService();
 		
@@ -59,7 +58,7 @@ public class TestCreateCategory {
 }
 	
 	@Test
-	public void testCreateUserWithNameEmpty() {
+	public void testCreateCategoryWithNameEmpty() {
 		
 		CategoryService categoryService = new CategoryService();
 		
@@ -79,7 +78,7 @@ public class TestCreateCategory {
 }
 
 	@Test
-	public void testCreateUserWithInvalidName() {
+	public void testCreateCategoryWithInvalidName() {
 		
 		CategoryService categoryService = new CategoryService();
 		
@@ -92,7 +91,7 @@ public class TestCreateCategory {
 			Exception exception = assertThrows(ValidationException.class, () ->{
 				categoryService.create(newCategory);
 	});
-	String expectedMessage = "Name doesn't match the pattern";
+	String expectedMessage = "Name should contains only alphabets";
 	String actualMessage = exception.getMessage();
 	System.out.println(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));

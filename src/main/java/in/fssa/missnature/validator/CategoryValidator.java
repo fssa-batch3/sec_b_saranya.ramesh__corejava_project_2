@@ -67,12 +67,12 @@ public class CategoryValidator {
 			throw new ValidationException("Name cannot be null or empty");
 		}
 		
-		String regexp = "^[A-Za-z][A-Za-z\\\\\\\\s]*$";
+		String regexp = "^[A-Za-z][A-Za-z\\s]*$";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(Categoryname);
 		
 		if(!matcher.matches()) {
-			throw new ValidationException("Name doesn't match the pattern");
+			throw new ValidationException("Name should contains only alphabets");
 		}
 	}
 	

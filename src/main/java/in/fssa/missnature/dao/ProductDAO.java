@@ -47,7 +47,7 @@ public class ProductDAO implements ProductInterface {
 		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
@@ -115,7 +115,7 @@ public class ProductDAO implements ProductInterface {
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "UPDATE products set price = ? WHERE id = ?";
+			String query = "UPDATE products set price = ? WHERE id = ? AND is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, price);
@@ -146,7 +146,7 @@ public class ProductDAO implements ProductInterface {
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "DELETE FROM products WHERE id = ?";
+			String query = "UPDATE products SET is_active = 0 WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, id);
@@ -179,7 +179,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> allProducts = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT * FROM products";
+			String query = "SELECT * FROM products WHERE is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -221,7 +221,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> listOfProductsByCategoryId = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT * FROM products WHERE category_id = ?";
+			String query = "SELECT * FROM products WHERE category_id = ? AND is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,category_id);
@@ -271,7 +271,7 @@ public class ProductDAO implements ProductInterface {
 		Product product = null;
 		
 		try {
-			String query = "SELECT * FROM products WHERE id = ?";
+			String query = "SELECT * FROM products WHERE id = ? AND is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,productId);

@@ -20,13 +20,14 @@ public class ProductValidator {
 	 * @param product
 	 * @throws ValidationException
 	 */
+	
 	public void validateProduct(Product product) throws ValidationException{
 		
 		if(product == null) {
 			throw new ValidationException("Invalid Product input");
 		}
 		// business validation
-		Connection con = null;
+		 Connection con = null;
 	     PreparedStatement ps = null;
 	     ResultSet rs = null;
 	     
@@ -129,7 +130,7 @@ public class ProductValidator {
 	 */
 	public void validateWeight(int weight)throws ValidationException{
 		
-		if(weight < 0) {
+		if(weight <= 0) {
 			throw new ValidationException("Weight cannot be zero or negative");
 		}
 	}

@@ -7,6 +7,7 @@ import in.fssa.missnature.model.Product;
 import in.fssa.missnature.validator.ProductValidator;
 
 public class ProductService {
+	
 /**
  * 
  * @return
@@ -29,6 +30,7 @@ public class ProductService {
 	    ProductValidator validator = new ProductValidator();
 	    validator.validateCategoryId(category_id);
 
+	    
 	    ProductDAO productDAO = new ProductDAO();
 	    Set<Product> products = productDAO.listallProductsByCategoryId(category_id);
 	    

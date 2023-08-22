@@ -55,7 +55,7 @@ public class CategoryDAO implements CategoryInterface{
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "UPDATE category set name = ? WHERE id = ?";
+			String query = "UPDATE category set name = ? WHERE id = ? AND is_active = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, categoryName);

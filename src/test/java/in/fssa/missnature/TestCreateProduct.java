@@ -363,52 +363,24 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("foot moist");
+		product.setCategory_id(4);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(0);
+		product.setProduct_weight(-1);
+		product.setQuantity_unit(Product.QuantityUnit.ML);
 		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelf_life("3 months");
 		product.setPrice(300);
-		
 		product.toString();
 
 			Exception exception = assertThrows(ValidationException.class, () ->{
 				productService.createProduct(product);
 	});
-	String expectedMessage = "weight cannot be null or empty";
+	String expectedMessage = "Weight cannot be zero or negative";
 	String actualMessage = exception.getMessage();
 	System.out.println(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));
 }
-	
-//	@Test
-//	void testCreateProductWithWeightNull() {
-//		
-//		ProductService productService = new ProductService();
-//		
-//		Product product = new Product();
-//		product.setName("herbal Shampoo");
-//		product.setCategory_id(2);
-//		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
-//		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
-//		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-//		product.setProduct_weight(null);
-//		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-//		product.setShelf_life("3 months");
-//		product.setPrice(300);
-//		
-//		product.toString();
-//
-//			Exception exception = assertThrows(ValidationException.class, () ->{
-//				productService.createProduct(product);
-//	});
-//	String expectedMessage = "weight cannot be null or empty";
-//	String actualMessage = exception.getMessage();
-//	System.out.println(actualMessage);
-//	assertTrue(expectedMessage.equals(actualMessage));
-//
-//	}
 }

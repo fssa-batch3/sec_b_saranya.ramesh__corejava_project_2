@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.service.UserService;
 import in.fssa.missnature.exception.ValidationException;
- class TestCreateUser {
+
+class TestCreateUser {
 
 	@Test
 	 void testCreateUserWithValidInput() {
@@ -148,7 +149,7 @@ import in.fssa.missnature.exception.ValidationException;
 		Exception exception = assertThrows(ValidationException.class, () ->{
 		userService.create(newUser);
 	});
-	String expectedMessage = "Name should match the pattern";
+	String expectedMessage = "Name should contains only alphabets";
 	String actualMessage = exception.getMessage();
 	System.out.println(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));	
@@ -234,5 +235,4 @@ import in.fssa.missnature.exception.ValidationException;
 	System.out.println(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));
 }
-	
 }

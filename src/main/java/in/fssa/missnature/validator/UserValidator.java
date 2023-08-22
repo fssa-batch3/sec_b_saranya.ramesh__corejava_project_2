@@ -126,7 +126,7 @@ public class UserValidator {
         StringUtil.rejectIfInvalidString(name, "Name");
         
         if (!Pattern.matches(NAME_PATTERN, name)) {
-            throw new ValidationException("Name should match the pattern");
+            throw new ValidationException("Name should contains only alphabets");
         }
     
     }
