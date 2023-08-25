@@ -11,30 +11,31 @@ public class UserService {
  * @param newUser
  * @throws Exception
  */
-	public void create(User newUser) throws Exception {
+	public void createUser(User newUser) throws Exception {
 		
 		UserValidator userValidator = new UserValidator();
 	
 			userValidator.validate(newUser);
 			
-			UserDAO userDao = new UserDAO();
+			UserDAO userDAO = new UserDAO();
 					
-			userDao.create(newUser);
+			userDAO.create(newUser);
 	}
+	
 /**
  * 
  * @param id
  * @throws Exception
  */
-	public void delete(int id)throws Exception{
+	public void deleteUser(int id)throws Exception{
 	
 		UserValidator userValidator = new UserValidator();
 	
 			userValidator.validateUser(id);
 			
-			UserDAO userDao1 = new UserDAO();
+			UserDAO userDAO = new UserDAO();
 			
-			userDao1.delete(id);
+			userDAO.delete(id);
 }
 	/**
 	 * 
@@ -49,9 +50,9 @@ public class UserService {
 		userValidator.validateUser(id);
 		userValidator.validateName(newName);
 		
-		UserDAO userDao1 = new UserDAO();
+		UserDAO userDAO = new UserDAO();
 		
-		userDao1.updateName(id, newName);
+		userDAO.updateName(id, newName);
 		
 	}
 /**
@@ -68,9 +69,8 @@ public class UserService {
 		userValidator.validateUser(id);
 		userValidator.validatePassword(newPassword);
 		
-		UserDAO userDao1 = new UserDAO();
-		userDao1.updatePassword(id, newPassword);
+		UserDAO userDAO = new UserDAO();
+		userDAO.updatePassword(id, newPassword);
 	}
-
 }
 

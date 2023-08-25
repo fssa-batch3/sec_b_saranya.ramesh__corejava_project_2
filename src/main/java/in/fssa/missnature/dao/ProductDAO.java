@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.interfacesfile.ProductInterface;
 import in.fssa.missnature.model.Product;
 import in.fssa.missnature.util.ConnectionUtil;
@@ -17,28 +18,29 @@ public class ProductDAO implements ProductInterface {
 	 * Creates a new product in the database.
 	 *
 	 * @param product The Product object containing the information for the new product.
-	 * @throws RuntimeException if there's an issue with database connectivity or SQL execution.
+	 * @throws PersistanceException 
+	 * @throws PersistanceException if there's an issue with database connectivity or SQL execution.
 	 */
-	@Override
-	public void create(Product product) {
+	
+	public void create(Product product) throws PersistanceException {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 
 		try {
-			String query = "INSERT INTO products (name,category_id, description, product_weight,quantity_unit, price, ingredients, benefits, how_to_use, shelf_life) VALUES (?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, ingredients, benefits, howToUse, shelfLife) VALUES (?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1,product.getName());
-			ps.setInt(2, product.getCategory_id());
+			ps.setInt(2, product.getCategoryId());
 			ps.setString(3, product.getDescription());
-			ps.setInt(4, product.getProduct_weight());
-			ps.setString(5, product.getQuantity_unit().toString());
+			ps.setInt(4, product.getWeight());
+			ps.setString(5, product.getQuantityUnit().toString());
 			ps.setInt(6, product.getPrice());
 			ps.setString(7, product.getIngredients());
 			ps.setString(8, product.getBenefits());
-			ps.setString(9, product.getHow_to_use());
-			ps.setString(10, product.getShelf_life());
+			ps.setString(9, product.getHowToUse());
+			ps.setString(10, product.getShelfLife());
 			
 			ps.executeUpdate();
 			
@@ -47,7 +49,7 @@ public class ProductDAO implements ProductInterface {
 		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
@@ -57,29 +59,29 @@ public class ProductDAO implements ProductInterface {
 	 * Updates the details of a product in the database.
 	 *
 	 * @param product The Product object containing the updated information for the product.
-	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if the update fails.
+	 * @throws PersistanceException if there's an issue with database connectivity, SQL execution, or if the update fails.
 	 */
 	@Override
-	public void updateProduct(Product product ) {
+	public void updateProduct(Product product)throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-		String query = "UPDATE products SET name = ?, category_id = ?, description = ?, "
-		       + "product_weight = ?,quantity_unit =?, ingredients = ?, benefits = ?, "
-		       + "how_to_use = ?, shelf_life = ? WHERE id = ?";
+		String query = "UPDATE products SET name = ?, categoryId = ?, description = ?, "
+		       + "weight = ?,quantityUnit =?, ingredients = ?, benefits = ?, "
+		       + "howToUse = ?, shelfLife = ? WHERE id = ?";
 		conn = ConnectionUtil.getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, product.getName());
-		ps.setInt(2, product.getCategory_id());
+		ps.setInt(2, product.getCategoryId());
 		ps.setString(3, product.getDescription());
-		ps.setInt(4, product.getProduct_weight());
-		ps.setString(5, product.getQuantity_unit().toString());
+		ps.setInt(4, product.getWeight());
+		ps.setString(5, product.getQuantityUnit().toString());
 		ps.setString(6, product.getIngredients());
 		ps.setString(7, product.getBenefits());
-		ps.setString(8, product.getHow_to_use());
-		ps.setString(9, product.getShelf_life());
+		ps.setString(8, product.getHowToUse());
+		ps.setString(9, product.getShelfLife());
 		ps.setInt(10, product.getId());
 		
 		
@@ -94,28 +96,27 @@ public class ProductDAO implements ProductInterface {
 		} catch (SQLException e) {
 		e.printStackTrace();
 		System.out.println(e.getMessage());
-		throw new RuntimeException("Error updating product");
+		throw new PersistanceException("Error updating product");
 		}
 		finally {
 		ConnectionUtil.close(conn, ps);
 		}
 }
-
 	/**
 	 * Updates the price of a product in the database based on its ID.
 	 *
 	 * @param id The ID of the product whose price is to be updated.
 	 * @param price The new price to be assigned to the product.
-	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if the update fails.
+	 * @throws PersistanceException if there's an issue with database connectivity, SQL execution, or if the update fails.
 	 */
 	@Override
-	public void updatePrice(int id, int price) {
+	public void updatePrice(int id, int price) throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "UPDATE products set price = ? WHERE id = ? AND is_active = 1";
+			String query = "UPDATE products SET price = ? WHERE id = ? AND isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, price);
@@ -129,24 +130,27 @@ public class ProductDAO implements ProductInterface {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException(e);	
+			throw new PersistanceException(e.getMessage());	
 		}
+		finally {
+			ConnectionUtil.close(conn, ps);
+			}
 	}
 
 	/**
 	 * Deletes a product from the database based on its ID.
 	 *
 	 * @param id The ID of the product to be deleted.
-	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or if the deletion fails.
+	 * @throws PersistanceException if there's an issue with database connectivity, SQL execution, or if the deletion fails.
 	 */
 	@Override
-	public void deleteProduct(int id) {
+	public void deleteProduct(int id) throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "UPDATE products SET is_active = 0 WHERE id = ?";
+			String query = "UPDATE products SET isActive = 0 WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, id);
@@ -156,7 +160,7 @@ public class ProductDAO implements ProductInterface {
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException(e.getMessage());
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
@@ -167,10 +171,10 @@ public class ProductDAO implements ProductInterface {
 	 * Retrieves a set of all products from the database.
 	 *
 	 * @return A set containing all products retrieved from the database.
-	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or result retrieval.
+	 * @throws PersistanceException if there's an issue with database connectivity, SQL execution, or result retrieval.
 	 */
 	@Override
-	public Set<Product> listAllProducts() {
+	public Set<Product> listAllProducts() throws PersistanceException{
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -179,7 +183,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> allProducts = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT * FROM products WHERE is_active = 1";
+			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -188,22 +192,24 @@ public class ProductDAO implements ProductInterface {
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
-				product.setCategory_id(rs.getInt("category_id"));
+				product.setCategoryId(rs.getInt("categoryId"));
 				product.setBenefits(rs.getString("benefits"));
 				product.setDescription(rs.getString("description"));
-				product.setHow_to_use(rs.getString("how_to_use"));
+				product.setHowToUse(rs.getString("howToUse"));
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
-				product.setShelf_life(rs.getString("shelf_life"));
-				product.setProduct_weight(rs.getInt("product_weight"));
-				product.setQuantity_unit(Product.QuantityUnit.valueOf(rs.getString("quantity_unit")));
+				product.setShelfLife(rs.getString("shelfLife"));
+				product.setWeight(rs.getInt("weight"));
+				product.setCreatedAt(rs.getString("createdAt"));
+				product.setModifiedAt(rs.getString("modifiedAt"));
+				product.setQuantityUnit(Product.QuantityUnit.valueOf(rs.getString("quantityUnit")));
 				
 				allProducts.add(product);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
@@ -212,7 +218,7 @@ public class ProductDAO implements ProductInterface {
 	}
 
 	@Override
-	public Set<Product> listallProductsByCategoryId(int category_id) {
+	public Set<Product> listallProductsByCategoryId(int categoryId) throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -221,32 +227,34 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> listOfProductsByCategoryId = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT * FROM products WHERE category_id = ? AND is_active = 1";
+			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE categoryId = ? AND isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1,category_id);
+			ps.setInt(1,categoryId);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
-				product.setCategory_id(rs.getInt("category_id"));
+				product.setCategoryId(categoryId);
 				product.setBenefits(rs.getString("benefits"));
 				product.setDescription(rs.getString("description"));
-				product.setHow_to_use(rs.getString("how_to_use"));
+				product.setHowToUse(rs.getString("howToUse"));
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
-				product.setShelf_life(rs.getString("shelf_life"));
-				product.setProduct_weight(rs.getInt("Product_weight"));
-				product.setQuantity_unit(Product.QuantityUnit.valueOf(rs.getString("quantity_unit")));
+				product.setShelfLife(rs.getString("shelfLife"));
+				product.setWeight(rs.getInt("weight"));
+				product.setCreatedAt(rs.getString("createdAt"));
+				product.setModifiedAt(rs.getString("modifiedAt"));
+				product.setQuantityUnit(Product.QuantityUnit.valueOf(rs.getString("quantityUnit")));
 				
 				listOfProductsByCategoryId.add(product);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
@@ -260,10 +268,10 @@ public class ProductDAO implements ProductInterface {
 	 *
 	 * @param productId The ID of the product whose details are to be retrieved.
 	 * @return The Product object containing the details of the product.
-	 * @throws RuntimeException if there's an issue with database connectivity, SQL execution, or result retrieval.
+	 * @throws PersistanceException if there's an issue with database connectivity, SQL execution, or result retrieval.
 	 */
 	@Override
-	public Product findProductDetailsByProductId(int productId) {
+	public Product findProductDetailsByProductId(int productId) throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -271,41 +279,37 @@ public class ProductDAO implements ProductInterface {
 		Product product = null;
 		
 		try {
-			String query = "SELECT * FROM products WHERE id = ? AND is_active = 1";
+			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE id = ? AND isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,productId);
 			rs = ps.executeQuery();
 			
-		
-			
 			if(rs.next()) {
 				product = new Product();
-				
-				product.setId(rs.getInt("id"));
+				product.setId(productId);
 				product.setName(rs.getString("name"));
-				product.setDescription(rs.getString("description"));
-				product.setIngredients(rs.getString("ingredients"));
+				product.setCategoryId(rs.getInt("categoryId"));
 				product.setBenefits(rs.getString("benefits"));
-				product.setHow_to_use(rs.getString("how_to_use"));
-				product.setShelf_life(rs.getString("shelf_life"));
+				product.setDescription(rs.getString("description"));
+				product.setHowToUse(rs.getString("howToUse"));
+				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
-				product.setProduct_weight(rs.getInt("Product_weight"));
-				product.setQuantity_unit(Product.QuantityUnit.valueOf(rs.getString("quantity_unit")));
-				product.setCategory_id(rs.getInt("category_id"));
-				
+				product.setShelfLife(rs.getString("shelfLife"));
+				product.setWeight(rs.getInt("weight"));
+				product.setCreatedAt(rs.getString("createdAt"));
+				product.setModifiedAt(rs.getString("modifiedAt"));
+				product.setQuantityUnit(Product.QuantityUnit.valueOf(rs.getString("quantityUnit")));
 				
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps, rs);
 		}
 		return product;
 		}
-
-	
 }

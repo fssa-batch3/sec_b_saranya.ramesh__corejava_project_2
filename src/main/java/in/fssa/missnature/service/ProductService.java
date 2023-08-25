@@ -15,8 +15,8 @@ public class ProductService {
  */
 	public Set<Product> listAllProduct()throws Exception{
 		
-		ProductDAO product = new ProductDAO();
-		Set<Product> allProducts = product.listAllProducts();
+		ProductDAO productDAO = new ProductDAO();
+		Set<Product> allProducts = productDAO.listAllProducts();
 		
 		return allProducts;
 	}
@@ -26,13 +26,14 @@ public class ProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Set<Product> findProductDetailByCategoryId(int category_id) throws Exception {
-	    ProductValidator validator = new ProductValidator();
-	    validator.validateCategoryId(category_id);
-
+	
+	public Set<Product> findProductDetailByCategoryId(int categoryId) throws Exception {
+	    
+		ProductValidator validator = new ProductValidator();
+	    validator.validateCategoryId(categoryId);
 	    
 	    ProductDAO productDAO = new ProductDAO();
-	    Set<Product> products = productDAO.listallProductsByCategoryId(category_id);
+	    Set<Product> products = productDAO.listallProductsByCategoryId(categoryId);
 	    
 	    return products;
 	}
@@ -42,13 +43,13 @@ public class ProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Product FindProductDetailsByProductId(int product_id)throws Exception{
+	public Product FindProductDetailsByProductId(int productId)throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
-		validator.validateProductId(product_id);
+		validator.validateProductId(productId);
 		
 		ProductDAO productDAO = new ProductDAO();
-		Product product = productDAO.findProductDetailsByProductId(product_id);
+		Product product = productDAO.findProductDetailsByProductId(productId);
 		
 		return product;
 		
@@ -80,17 +81,17 @@ public class ProductService {
 		
 		validator.validateProductId(product.getId());
 		validator.validateName(product.getName());
-		validator.validateCategoryId(product.getCategory_id());
+		validator.validateCategoryId(product.getCategoryId());
 		validator.validateDescription(product.getDescription());
-		validator.validateWeight(product.getProduct_weight());
+		validator.validateWeight(product.getWeight());
 		validator.validateIngredients(product.getIngredients());
 		validator.validateBenefits(product.getBenefits());
-		validator.validateHowToUse(product.getHow_to_use());
-		validator.validateShelfLife(product.getShelf_life());
+		validator.validateHowToUse(product.getHowToUse());
+		validator.validateShelfLife(product.getShelfLife());
 		
 		ProductDAO productDAO = new ProductDAO();
 		productDAO.updateProduct(product);
-		
+									
 	}
 	/**
 	 * 

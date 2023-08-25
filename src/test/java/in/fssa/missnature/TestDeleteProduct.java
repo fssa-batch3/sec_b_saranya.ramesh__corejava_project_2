@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import in.fssa.missnature.model.Product;
 import in.fssa.missnature.service.ProductService;
 
-public class TestDeleteProduct {
+class TestDeleteProduct {
 
 	@Test
 	 void testDeleteProduct() {

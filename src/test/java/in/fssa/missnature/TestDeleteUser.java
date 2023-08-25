@@ -7,19 +7,17 @@ import org.junit.jupiter.api.Test;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.service.UserService;
 
-public class TestDeleteUser {
+class TestDeleteUser {
 
 	@Test
-	public void testDeleteUserWithValidInput() {
+	 void testDeleteUser() {
 		
 		UserService userService = new UserService();
 
 		User newUser = new User();
-		newUser.setId(1);
+		newUser.setId(3);
 		assertDoesNotThrow(() ->{
-			userService.delete(newUser.getId());
+			userService.deleteUser(newUser.getId());
 		});
 	}
-	
-	
 }

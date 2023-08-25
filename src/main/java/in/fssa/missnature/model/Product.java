@@ -5,26 +5,27 @@ public class Product {
 	private int id;
 	private String name;
 	private String description;
-	private int product_weight;
+	private int weight;
 	private String ingredients;
 	private String benefits;
-	private String shelf_life;
-	private String how_to_use;
+	private String shelfLife;
+	private String howToUse;
 	private int price;
-	private int category_id;
-	private String created_at;
-	private String modified_at;
-	private QuantityUnit quantity_unit;
+	private int categoryId;
+	private String createdAt;
+	private String modifiedAt;
+	private QuantityUnit quantityUnit;
+	
 
 	public enum QuantityUnit{
 		G, ML
 	}
 	
-	public QuantityUnit getQuantity_unit() {
-		return quantity_unit;
+	public QuantityUnit getQuantityUnit() {
+		return quantityUnit;
 	}
-	public void setQuantity_unit(QuantityUnit quantity_unit) {
-		this.quantity_unit = quantity_unit;
+	public void setQuantityUnit(QuantityUnit quantityUnit) {
+		this.quantityUnit = quantityUnit;
 	}
 	public int getId() {
 		return id;
@@ -44,11 +45,11 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getProduct_weight() {
-		return product_weight;
+	public int getWeight() {
+		return weight;
 	}
-	public void setProduct_weight(int product_weight) {
-		this.product_weight = product_weight;
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 	public String getIngredients() {
 		return ingredients;
@@ -62,17 +63,17 @@ public class Product {
 	public void setBenefits(String benefits) {
 		this.benefits = benefits;
 	}
-	public String getShelf_life() {
-		return shelf_life;
+	public String getShelfLife() {
+		return shelfLife;
 	}
-	public void setShelf_life(String shelf_life) {
-		this.shelf_life = shelf_life;
+	public void setShelfLife(String shelfLife) {
+		this.shelfLife = shelfLife;
 	}
-	public String getHow_to_use() {
-		return how_to_use;
+	public String getHowToUse() {
+		return howToUse;
 	}
-	public void setHow_to_use(String how_to_use) {
-		this.how_to_use = how_to_use;
+	public void setHowToUse(String howToUse) {
+		this.howToUse = howToUse;
 	}
 	public int getPrice() {
 		return price;
@@ -80,31 +81,31 @@ public class Product {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getCategory_id() {
-		return category_id;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getCreated_at() {
-		return created_at;
+	public String getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(String created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
-	public String getModified_at() {
-		return modified_at;
+	public String getModifiedAt() {
+		return modifiedAt;
 	}
-	public void setModified_at(String modified_at) {
-		this.modified_at = modified_at;
+	public void setModifiedAt(String modifiedAt) {
+		this.modifiedAt = modifiedAt;
 	}
 	
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", product_weight="
-				+ product_weight + ", ingredients=" + ingredients + ", benefits=" + benefits + ", shelf_life="
-				+ shelf_life + ", how_to_use=" + how_to_use + ", price=" + price + ", category_id=" + category_id
-				+ ", created_at=" + created_at + ", modified_at=" + modified_at + ", quantity_unit=" + quantity_unit
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", weight="
+				+ weight + ", ingredients=" + ingredients + ", benefits=" + benefits + ", shelfLife="
+				+ shelfLife + ", howToUse=" + howToUse + ", price=" + price + ", categoryId=" + categoryId
+				+ ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + ", quantityUnit=" + quantityUnit
 				+ "]";
 	}
 }

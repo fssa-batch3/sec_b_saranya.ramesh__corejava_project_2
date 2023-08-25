@@ -32,7 +32,7 @@ public class ProductValidator {
 	     ResultSet rs = null;
 	     
 		try {
-			String query = "SELECT * FROM products WHERE name = ?";
+			String query = "SELECT name FROM products WHERE name = ?";
 			con = ConnectionUtil.getConnection();
          ps = con.prepareStatement(query);
          ps.setString(1, product.getName());
@@ -54,11 +54,11 @@ public class ProductValidator {
 		validateDescription(product.getDescription());
 		validateIngredients(product.getIngredients());
 		validateBenefits(product.getBenefits());
-		validateHowToUse(product.getHow_to_use());
-		validateShelfLife(product.getShelf_life());
-		validateWeight(product.getProduct_weight());
+		validateHowToUse(product.getHowToUse());
+		validateShelfLife(product.getShelfLife());
+		validateWeight(product.getWeight());
 		validatePrice(product.getPrice());
-		validateCategoryId(product.getCategory_id());
+		validateCategoryId(product.getCategoryId());
 		
 	}
 	
@@ -68,11 +68,11 @@ public class ProductValidator {
 	 * @throws ValidationException
 	 */
 	
-	public  void validateName(String name) throws ValidationException {
+	public  void validateName(String productName) throws ValidationException {
         
-        StringUtil.rejectIfInvalidString(name, "Name");
+        StringUtil.rejectIfInvalidString(productName, "Name");
         
-        if (!Pattern.matches(NAME_PATTERN, name)) {
+        if (!Pattern.matches(NAME_PATTERN, productName)) {
             throw new ValidationException("Name does not match the pattern");
         }
     
@@ -172,7 +172,7 @@ public class ProductValidator {
 	     ResultSet rs = null;
 	     
 		try {
-			String query = "SELECT * FROM products WHERE id = ?";
+			String query = "SELECT name FROM products WHERE id = ?";
 			con = ConnectionUtil.getConnection();
            ps = con.prepareStatement(query);
            ps.setInt(1, productId);
@@ -209,7 +209,7 @@ public class ProductValidator {
 	     ResultSet rs = null;
 	     
 		try {
-			String query = "SELECT * FROM category WHERE id = ?";
+			String query = "SELECT name FROM categories WHERE id = ?";
 			con = ConnectionUtil.getConnection();
            ps = con.prepareStatement(query);
            ps.setInt(1, categoryId);

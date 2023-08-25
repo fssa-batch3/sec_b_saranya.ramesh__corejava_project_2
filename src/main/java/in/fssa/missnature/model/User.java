@@ -6,7 +6,7 @@ public class User {
 	String name;
 	String email;
 	String password;
-	long mobile_number;
+	long mobileNumber;
 	boolean isActive = true;
 	
 	public int getId() {
@@ -33,11 +33,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public long getMobile_number() {
-		return mobile_number;
+	public long getMobileNumber() {
+		return mobileNumber;
 	}
-	public void setMobile_number(long mobile_number) {
-		this.mobile_number = mobile_number;
+	public void setMobileNumber(long mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 	public boolean isActive() {
 		return isActive;
@@ -49,6 +49,6 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", mobile_number="
-				+ mobile_number + ", isActive=" + isActive + "]";
+				+ mobileNumber + ", isActive=" + isActive + "]";
 	}
 }

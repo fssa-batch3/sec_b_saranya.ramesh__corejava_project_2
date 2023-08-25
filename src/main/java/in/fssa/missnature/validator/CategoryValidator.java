@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import in.fssa.missnature.exception.ValidationException;
-import in.fssa.missnature.model.Category;
+import in.fssa.missnature.model.Categories;
 import in.fssa.missnature.util.ConnectionUtil;
 
 public class CategoryValidator {
@@ -18,7 +18,7 @@ public class CategoryValidator {
 	 * @param category
 	 * @throws ValidationException
 	 */
-	public static void validateCategory(Category category) throws ValidationException{
+	public static void validateCategory(Categories category) throws ValidationException{
 		
 		if (category == null) {
 			throw new ValidationException("Invalid category input");
@@ -33,7 +33,7 @@ public class CategoryValidator {
 	     PreparedStatement ps = null;
 	     ResultSet rs = null;
 		try {
-			String query = "SELECT * FROM category WHERE name = ?";
+			String query = "SELECT name FROM categories WHERE name = ?";
 			con = ConnectionUtil.getConnection();
             ps = con.prepareStatement(query);
             ps.setString(1, category.getName());
@@ -61,15 +61,15 @@ public class CategoryValidator {
 	 * @param Categoryname
 	 * @throws ValidationException
 	 */
-	public static void validateName(String Categoryname) throws ValidationException{
+	public static void validateName(String categoryName) throws ValidationException{
 		
-		if(Categoryname == null || "".equals(Categoryname.trim())) {
+		if(categoryName == null || "".equals(categoryName.trim())) {
 			throw new ValidationException("Name cannot be null or empty");
 		}
 		
 		String regexp = "^[A-Za-z][A-Za-z\\s]*$";
 		Pattern pattern = Pattern.compile(regexp);
-		Matcher matcher = pattern.matcher(Categoryname);
+		Matcher matcher = pattern.matcher(categoryName);
 		
 		if(!matcher.matches()) {
 			throw new ValidationException("Name should contains only alphabets");
@@ -86,7 +86,7 @@ public class CategoryValidator {
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 		try {
-			String query = "SELECT * FROM category WHERE id = ?";
+			String query = "SELECT name FROM categories WHERE id = ?";
 			con = ConnectionUtil.getConnection();
            ps = con.prepareStatement(query);
            ps.setInt(1, categoryId);

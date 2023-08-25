@@ -7,30 +7,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.missnature.exception.ValidationException;
-import in.fssa.missnature.model.Category;
-import in.fssa.missnature.model.User;
+import in.fssa.missnature.model.Categories;
 import in.fssa.missnature.service.CategoryService;
-import in.fssa.missnature.service.UserService;
 
 
-public class TestCreateCategory {
+
+class TestCreateCategory {
 
 	@Test
-	public void testCreateCategoryWithValidInput() {
+	 void testCreateCategoryWithValidInput() {
 		
 		CategoryService categoryService = new CategoryService();
 
-		Category newCategory = new Category();
-		newCategory.setName("foot Care");
+		Categories newCategory = new Categories();
+		newCategory.setName("hair care combo");
 		assertDoesNotThrow(() ->{
-			categoryService.create(newCategory);
+			categoryService.createCategory(newCategory);
 		});
 	}
 	@Test    
-	public void testCreateCategoryWithInvalidInput() {
+	 void testCreateCategoryWithInvalidInput() {
 		CategoryService categoryService = new CategoryService();
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			categoryService.create(null);
+			categoryService.createCategory(null);
 		});
 		String expectedMessage = "Invalid category input";
 		String actualMessage = exception.getMessage();
@@ -39,18 +38,18 @@ public class TestCreateCategory {
 	}
 	
 	@Test
-	public void testCreateCategoryWithNameNull() {
+	 void testCreateCategoryWithNameNull() {
 		
 		CategoryService categoryService = new CategoryService();
 		
-		Category newCategory = new Category();
+		Categories newCategory = new Categories();
 		
 		newCategory.setName(null);
 		
 		newCategory.toString();
 
 			Exception exception = assertThrows(ValidationException.class, () ->{
-				categoryService.create(newCategory);
+				categoryService.createCategory(newCategory);
 	});
 	String expectedMessage = "Name cannot be null or empty";
 	String actualMessage = exception.getMessage();
@@ -58,18 +57,18 @@ public class TestCreateCategory {
 }
 	
 	@Test
-	public void testCreateCategoryWithNameEmpty() {
+	 void testCreateCategoryWithNameEmpty() {
 		
 		CategoryService categoryService = new CategoryService();
 		
-		Category newCategory = new Category();
+		Categories newCategory = new Categories();
 		
 		newCategory.setName(" ");
 		
 		newCategory.toString();
 			
 			Exception exception = assertThrows(ValidationException.class, () ->{
-				categoryService.create(newCategory);
+				categoryService.createCategory(newCategory);
 	});
 	String expectedMessage = "Name cannot be null or empty";
 	String actualMessage = exception.getMessage();
@@ -78,18 +77,18 @@ public class TestCreateCategory {
 }
 
 	@Test
-	public void testCreateCategoryWithInvalidName() {
+	 void testCreateCategoryWithInvalidName() {
 		
 		CategoryService categoryService = new CategoryService();
 		
-		Category newCategory = new Category();
+		Categories newCategory = new Categories();
 		
 		newCategory.setName("1234");
 		
 		newCategory.toString();
 			
 			Exception exception = assertThrows(ValidationException.class, () ->{
-				categoryService.create(newCategory);
+				categoryService.createCategory(newCategory);
 	});
 	String expectedMessage = "Name should contains only alphabets";
 	String actualMessage = exception.getMessage();

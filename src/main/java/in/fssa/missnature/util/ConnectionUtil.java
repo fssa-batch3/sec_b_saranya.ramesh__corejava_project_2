@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import io.github.cdimascio.dotenv.Dotenv;
+//import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
 	/**
@@ -19,18 +19,18 @@ public class ConnectionUtil {
 	String password;
 	
 
-	if (System.getenv("CI") != null) {
+	// cloud database
+	
          url = System.getenv("DATABASE_HOSTNAME");
          userName = System.getenv("DATABASE_USERNAME");
          password = System.getenv("DATABASE_PASSWORD");
-        
-    } else {
-		Dotenv env = Dotenv.load();
-		
-		 url = env.get("DATABASE_HOSTNAME");
-		 userName = env.get("DATABASE_USERNAME");
-		 password = env.get("DATABASE_PASSWORD");
-    }
+    
+    	// local 
+//    	url = "jdbc:mysql://164.52.216.41:3306/saranya_ramesh__corejava_project";
+//    	userName = "13WSR0mXUsnO";
+//    	password = "7231823c-1c64-446b-9f0b-aa0a287ef8f5";
+    		
+    
 		Connection connection = null;
 
 		try {

@@ -4,17 +4,17 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.Test;
 
-import in.fssa.missnature.model.Category;
+import in.fssa.missnature.model.Categories;
 import in.fssa.missnature.service.CategoryService;
 
-public class TestUpdateCategory {
+class TestUpdateCategory {
 
 	@Test
-	public void testUpdateCategoryName() {
+	 void testUpdateCategoryName() {
 		
 		CategoryService categoryService = new CategoryService();
 
-		Category updateCategory = new Category();
+		Categories updateCategory = new Categories();
 		updateCategory.setId(2);
 		updateCategory.setName("haircare");
 		assertDoesNotThrow(() ->{

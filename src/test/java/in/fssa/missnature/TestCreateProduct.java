@@ -10,22 +10,22 @@ import in.fssa.missnature.exception.ValidationException;
 import in.fssa.missnature.model.Product;
 import in.fssa.missnature.service.ProductService;
 
-public class TestCreateProduct {
+class TestCreateProduct {
 
 	@Test
 	 void testCreateProductWithValidInput() {
 		
 		ProductService productService = new ProductService();
 		Product product = new Product();
-		product.setName("Neem Shampoo");
-		product.setCategory_id(2);
+		product.setName("aloevera Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		assertDoesNotThrow(() ->{
 			productService.createProduct(product);
@@ -111,15 +111,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("aloe Shampoo");
+		product.setCategoryId(2);
 		product.setDescription(null);
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString(); 
@@ -139,15 +139,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("hibiscus Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString();
@@ -167,15 +167,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("moringa Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString();
@@ -195,15 +195,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("aloe Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits(null);
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString();
@@ -223,15 +223,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("methi Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString();
@@ -251,15 +251,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("antidandruff Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("");
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("");
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString();
@@ -279,15 +279,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("eggwhite Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use(null);
-		product.setShelf_life("3months");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse(null);
+		product.setShelfLife("3months");
 		product.setPrice(300);
 		
 		product.toString();
@@ -307,15 +307,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("cooling Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life(null);
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife(null);
 		product.setPrice(300);
 		
 		product.toString();
@@ -335,15 +335,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("herbal Shampoo");
-		product.setCategory_id(2);
+		product.setName("protien Shampoo");
+		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(100);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("");
+		product.setWeight(100);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("");
 		product.setPrice(300);
 		
 		product.toString();
@@ -363,15 +363,15 @@ public class TestCreateProduct {
 		ProductService productService = new ProductService();
 		
 		Product product = new Product();
-		product.setName("foot moist");
-		product.setCategory_id(4);
+		product.setName("dove moist");
+		product.setCategoryId(4);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
 		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
-		product.setProduct_weight(-1);
-		product.setQuantity_unit(Product.QuantityUnit.ML);
-		product.setHow_to_use("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
-		product.setShelf_life("3 months");
+		product.setWeight(-1);
+		product.setQuantityUnit(Product.QuantityUnit.ML);
+		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
+		product.setShelfLife("3 months");
 		product.setPrice(300);
 		product.toString();
 

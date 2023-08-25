@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import in.fssa.missnature.model.Product;
 import in.fssa.missnature.service.ProductService;
 
-public class GetAllProducts {
+class GetAllProducts {
 
 
 	@Test
@@ -28,14 +28,14 @@ public class GetAllProducts {
 		 ProductService productService = new ProductService();
 		 
 		 try {
-			 Product product = productService.FindProductDetailsByProductId(1);
+			 Product product = productService.FindProductDetailsByProductId(2);
 			 System.out.println(product);
 			 
 		 }catch (Exception e) {
 		        e.printStackTrace();
 		    }
 	}
-	
+
 	@Test
 	 void getAll(){
 		ProductService productService = new ProductService();

@@ -3,28 +3,39 @@ package in.fssa.missnature.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Set;
 
+import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.interfacesfile.UserInterface;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.util.ConnectionUtil;
 
+/**
+ * Below the code for Write the DAO Methods
+ * @author SaranyaRamesh
+ *
+ */
 public class UserDAO implements UserInterface{
 
+	
+	/**
+	 * Below the code for creating the new user
+	 * @author SaranyaRamesh
+	 * @param newuser - this parameter refer the all user details 
+	 */
 	@Override
-	public void create(User newuser) {
+	public void create(User newuser)throws PersistanceException {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "INSERT INTO users (name,email,password,mobile_number)values(?,?,?,?)";
+			String query = "INSERT INTO users (name,email,password,mobileNumber) VALUES (?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newuser.getName());
 			ps.setString(2, newuser.getEmail());
 			ps.setString(3, newuser.getPassword());
-			ps.setLong(4, newuser.getMobile_number());
+			ps.setLong(4, newuser.getMobileNumber());
 			
 			ps.executeUpdate();
 			
@@ -33,20 +44,26 @@ public class UserDAO implements UserInterface{
 		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
 		}
 	}
 	
+	/**
+	 * Below the code for update the specific user password
+	 * @author SaranyaRamesh
+	 * @param id, newPassword - id refers to the user id & newPassword refers to the password given by the user
+	 *  
+	 */
 	@Override
-	public void updatePassword(int id, String newPassword) {
+	public void updatePassword(int id, String newPassword)throws PersistanceException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "UPDATE users set password = ? WHERE id = ? AND is_active = 1";
+			String query = "UPDATE users SET password = ? WHERE id = ? AND isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newPassword);
@@ -57,30 +74,38 @@ public class UserDAO implements UserInterface{
 				System.out.println("Password updated successfully");
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);	
+			throw new PersistanceException(e.getMessage());	
+		}
+		finally {
+			ConnectionUtil.close(conn, ps);
 		}
 		
 	}
 	
+	/**
+	 * Below the code for delete a particular user
+	 * @author SaranyaRamesh
+	 * @param userId - this parameter refer to a unique existing userId
+	 */
+	
 	@Override
-	public void delete(int userId) {
+	public void delete(int userId) throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "Update users set is_active = ? WHERE id = ?";
+			String query = "Update users SET isActive = 0 WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setBoolean(1, false);
-			ps.setInt(2, userId);
+			ps.setInt(1, userId);
 			ps.executeUpdate();
 			
 			System.out.println("User deleted Successfully");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException(e.getMessage());
+			throw new PersistanceException(e.getMessage());
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
@@ -88,14 +113,20 @@ public class UserDAO implements UserInterface{
 		
 	}
 
+	/**
+	 * Below the code for update user name
+	 * @author SaranyaRamesh
+	 * @param id, newName - id refers to the user id & newName refers to the updated name given by the user
+	 */
+	
 	@Override
-	public void updateName(int id, String newName) {
+	public void updateName(int id, String newName)throws PersistanceException {
 
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "UPDATE users set name = ? WHERE id = ? AND is_active = 1";
+			String query = "UPDATE users SET name = ? WHERE id = ? AND isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newName);
@@ -106,7 +137,10 @@ public class UserDAO implements UserInterface{
 				System.out.println("Name updated successfully");
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);	
+			throw new PersistanceException(e.getMessage());	
+		}
+		finally {
+			ConnectionUtil.close(conn, ps);
 		}
 		
 	}

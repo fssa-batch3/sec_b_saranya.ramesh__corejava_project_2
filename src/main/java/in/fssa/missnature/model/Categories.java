@@ -1,6 +1,6 @@
 package in.fssa.missnature.model;
 
-public class Category {
+public class Categories {
 
 	int id;
 	String name;
@@ -20,6 +20,6 @@ public class Category {
 	
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
+		return "Categories [id=" + id + ", name=" + name + "]";
 	}
 }

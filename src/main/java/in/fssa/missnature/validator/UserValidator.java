@@ -26,13 +26,13 @@ public class UserValidator {
 	public  void validate(User user) throws ValidationException,IllegalArgumentException {
 		
 		if (user == null) {
-			throw new ValidationException("Invalid User object");
+			throw new ValidationException("User object cannot be null");
 		}
 
         validateName(user.getName());
         validateEmail(user.getEmail());
         validatePassword(user.getPassword()); 
-        validateMobileNumber(user.getMobile_number());
+        validateMobileNumber(user.getMobileNumber());
 
     }
 
@@ -41,9 +41,9 @@ public class UserValidator {
 	 * @param id
 	 * @throws ValidationException
 	 */
-	public  void validateUser(int id)throws ValidationException{
+	public  void validateUser(int UserId)throws ValidationException{
 		
-		if(id < 0) {
+		if(UserId < 0) {
 			throw new ValidationException("Invalid user id");
 		}
 		
@@ -52,10 +52,10 @@ public class UserValidator {
 	     ResultSet rs = null;
 	     
 		try {
-			String query = "SELECT * FROM users WHERE is_active=1 AND id = ?";
+			String query = "SELECT name FROM users WHERE isActive = 1 AND id = ?";
 			con = ConnectionUtil.getConnection();
             ps = con.prepareStatement(query);
-            ps.setInt(1, id);
+            ps.setInt(1, UserId);
             rs = ps.executeQuery();
             
             if(rs.next()) {
@@ -99,7 +99,7 @@ public class UserValidator {
         
         try {
             
-            String query = "SELECT * FROM users WHERE is_active=1 AND mobile_number=?";
+            String query = "SELECT name FROM users WHERE isActive=1 AND mobileNumber=?";
             con = ConnectionUtil.getConnection();
             ps = con.prepareStatement(query);
             ps.setLong(1, mobileNumber);
@@ -121,11 +121,11 @@ public class UserValidator {
 
     }
     
-    public  void validateName(String name) throws ValidationException {
+    public  void validateName(String userName) throws ValidationException {
         
-        StringUtil.rejectIfInvalidString(name, "Name");
+        StringUtil.rejectIfInvalidString(userName, "Name");
         
-        if (!Pattern.matches(NAME_PATTERN, name)) {
+        if (!Pattern.matches(NAME_PATTERN, userName)) {
             throw new ValidationException("Name should contains only alphabets");
         }
     
@@ -135,11 +135,12 @@ public class UserValidator {
      * @param email
      * @throws ValidationException
      */
-    public  void validateEmail(String email) throws ValidationException {
+    
+    public  void validateEmail(String userEmail) throws ValidationException {
         
-        StringUtil.rejectIfInvalidString(email, "Email");
+        StringUtil.rejectIfInvalidString(userEmail, "Email");
         
-        if (!Pattern.matches(EMAIL_PATTERN, email)) {
+        if (!Pattern.matches(EMAIL_PATTERN, userEmail)) {
             throw new ValidationException("Email does not match the pattern");
         }
         
@@ -150,10 +151,10 @@ public class UserValidator {
         
         try {
             
-            String query = "SELECT * FROM users WHERE is_active=1 AND email=?";
+            String query = "SELECT name FROM users WHERE isActive=1 AND email=?";
             con = ConnectionUtil.getConnection();
             ps = con.prepareStatement(query);
-            ps.setString(1, email);
+            ps.setString(1, userEmail);
             rs = ps.executeQuery();
             
             while(rs.next()) {
@@ -176,18 +177,17 @@ public class UserValidator {
      * @param password
      * @throws ValidationException
      */
-    public  void validatePassword(String password) throws ValidationException {
+    public  void validatePassword(String userPassword) throws ValidationException {
         
-        StringUtil.rejectIfInvalidString(password, "Password");
+        StringUtil.rejectIfInvalidString(userPassword, "Password");
         
-        if(password.length() <8) {
+        if(userPassword.length() <8) {
             throw new ValidationException("Password must contain atleast 8 characters");
         }
         
-        if (!Pattern.matches(PASSWORD_PATTERN, password)) {
+        if (!Pattern.matches(PASSWORD_PATTERN, userPassword)) {
             throw new ValidationException("Password does not match the pattern");
         }
     }
     
 	}
-
