@@ -2,6 +2,7 @@ package in.fssa.missnature.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.fssa.missnature.exception.PersistanceException;
@@ -143,6 +144,67 @@ public class UserDAO implements UserInterface{
 			ConnectionUtil.close(conn, ps);
 		}
 		
+	}
+	
+	public void checkEmailExist(String userEmail) throws PersistanceException{
+		
+		Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        
+        try {
+            
+            String query = "SELECT name, email FROM users WHERE isActive=1 AND email=?";
+            con = ConnectionUtil.getConnection();
+            ps = con.prepareStatement(query);
+            ps.setString(1, userEmail);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                throw new PersistanceException("This user is already exist");
+            }
+        
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new PersistanceException(e.getMessage());
+        
+        } finally {
+            
+            ConnectionUtil.close(con, ps, rs);   
+        }
+	}
+	
+	public void checkMobileNumberExist (long mobileNumber)throws PersistanceException{
+		
+		Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        
+        try {
+            
+            String query = "SELECT name FROM users WHERE isActive=1 AND mobileNumber=?";
+            con = ConnectionUtil.getConnection();
+            ps = con.prepareStatement(query);
+            ps.setLong(1, mobileNumber);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                throw new PersistanceException("This user is already exist");
+            }
+        
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new PersistanceException(e.getMessage());
+        
+        } finally {
+            ConnectionUtil.close(con, ps, rs);
+        }
 	}
 	
 }

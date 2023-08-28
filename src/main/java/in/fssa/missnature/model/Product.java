@@ -15,8 +15,9 @@ public class Product {
 	private String createdAt;
 	private String modifiedAt;
 	private QuantityUnit quantityUnit;
-	
+	private boolean isActive = true;
 
+	
 	public enum QuantityUnit{
 		G, ML
 	}
@@ -99,13 +100,20 @@ public class Product {
 	public void setModifiedAt(String modifiedAt) {
 		this.modifiedAt = modifiedAt;
 	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", weight="
 				+ weight + ", ingredients=" + ingredients + ", benefits=" + benefits + ", shelfLife="
 				+ shelfLife + ", howToUse=" + howToUse + ", price=" + price + ", categoryId=" + categoryId
-				+ ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + ", quantityUnit=" + quantityUnit
+				+ ",isActive=" + isActive +", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + ", quantityUnit=" + quantityUnit
 				+ "]";
 	}
 }

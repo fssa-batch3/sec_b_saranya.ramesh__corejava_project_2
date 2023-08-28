@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 import in.fssa.missnature.util.*;
+import in.fssa.missnature.dao.UserDAO;
+import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.exception.ValidationException;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.util.StringUtil;
@@ -21,9 +23,9 @@ public class UserValidator {
      * 
      * @param user
      * @throws ValidationException
-     * @throws IllegalArgumentException
+     * @throws PersistanceException 
      */
-	public  void validate(User user) throws ValidationException,IllegalArgumentException {
+	public  void validate(User user) throws ValidationException, PersistanceException {
 		
 		if (user == null) {
 			throw new ValidationException("User object cannot be null");
@@ -79,8 +81,9 @@ public class UserValidator {
      * 
      * @param mobileNumber
      * @throws ValidationException
+     * @throws PersistanceException 
      */
-    public  void validateMobileNumber(long mobileNumber) throws ValidationException{
+    public  void validateMobileNumber(long mobileNumber) throws ValidationException, PersistanceException{
         
         String phno = String.valueOf(mobileNumber);
         
@@ -91,34 +94,9 @@ public class UserValidator {
         if(mobileNumber <= 6000000000l || mobileNumber >= 9999999999l) {
             throw new ValidationException("Invalid phone number");
         } 
+        UserDAO userDAO = new UserDAO();
+        userDAO.checkMobileNumberExist(mobileNumber);
         
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        
-        try {
-            
-            String query = "SELECT name FROM users WHERE isActive=1 AND mobileNumber=?";
-            con = ConnectionUtil.getConnection();
-            ps = con.prepareStatement(query);
-            ps.setLong(1, mobileNumber);
-            rs = ps.executeQuery();
-            
-            while(rs.next()) {
-                throw new ValidationException("This user is already exist");
-            }
-        
-        } catch (SQLException e) {
-            
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        
-        } finally {
-            ConnectionUtil.close(con, ps, rs);
-        }
-
     }
     
     public  void validateName(String userName) throws ValidationException {
@@ -134,9 +112,10 @@ public class UserValidator {
      * 
      * @param email
      * @throws ValidationException
+     * @throws PersistanceException 
      */
     
-    public  void validateEmail(String userEmail) throws ValidationException {
+    public void validateEmail(String userEmail) throws ValidationException, PersistanceException {
         
         StringUtil.rejectIfInvalidString(userEmail, "Email");
         
@@ -144,33 +123,9 @@ public class UserValidator {
             throw new ValidationException("Email does not match the pattern");
         }
         
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        UserDAO userDAO = new UserDAO();
+        userDAO.checkEmailExist(userEmail);
         
-        
-        try {
-            
-            String query = "SELECT name FROM users WHERE isActive=1 AND email=?";
-            con = ConnectionUtil.getConnection();
-            ps = con.prepareStatement(query);
-            ps.setString(1, userEmail);
-            rs = ps.executeQuery();
-            
-            while(rs.next()) {
-                throw new ValidationException("This user is already exist");
-            }
-        
-        } catch (SQLException e) {
-            
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        
-        } finally {
-            
-            ConnectionUtil.close(con, ps, rs);   
-        }
     }
     /**
      * 

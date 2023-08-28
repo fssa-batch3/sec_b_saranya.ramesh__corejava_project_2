@@ -48,12 +48,12 @@ public class UserService {
 		UserValidator userValidator = new UserValidator();
 		
 		userValidator.validateUser(id);
+		
 		userValidator.validateName(newName);
 		
 		UserDAO userDAO = new UserDAO();
 		
 		userDAO.updateName(id, newName);
-		
 	}
 /**
  * 	

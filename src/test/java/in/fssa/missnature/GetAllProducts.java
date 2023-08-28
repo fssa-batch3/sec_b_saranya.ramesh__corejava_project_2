@@ -21,7 +21,7 @@ class GetAllProducts {
 	        e.printStackTrace();
 	    }
 	}
-
+	
 	@Test
 	 void getProductDetailsByProductId() {
 		

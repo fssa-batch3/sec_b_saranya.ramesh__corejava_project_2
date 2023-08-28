@@ -70,7 +70,7 @@ public class ProductDAO implements ProductInterface {
 		try {
 		String query = "UPDATE products SET name = ?, categoryId = ?, description = ?, "
 		       + "weight = ?,quantityUnit =?, ingredients = ?, benefits = ?, "
-		       + "howToUse = ?, shelfLife = ? WHERE id = ?";
+		       + "howToUse = ?, shelfLife = ?, isActive = ? WHERE id = ?";
 		conn = ConnectionUtil.getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, product.getName());
@@ -82,7 +82,10 @@ public class ProductDAO implements ProductInterface {
 		ps.setString(7, product.getBenefits());
 		ps.setString(8, product.getHowToUse());
 		ps.setString(9, product.getShelfLife());
-		ps.setInt(10, product.getId());
+		ps.setBoolean(10, product.isActive());
+		ps.setInt(11, product.getId());
+		
+		
 		
 		
 		int rowsAffected = ps.executeUpdate();
@@ -183,7 +186,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> allProducts = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE isActive = 1";
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -227,7 +230,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> listOfProductsByCategoryId = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE categoryId = ? AND isActive = 1";
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE categoryId = ? AND isActive = 1";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,categoryId);
@@ -312,4 +315,88 @@ public class ProductDAO implements ProductInterface {
 		}
 		return product;
 		}
+	
+	public void checkProductNameExist(String prodName) throws PersistanceException{
+		 Connection con = null;
+	     PreparedStatement ps = null;
+	     ResultSet rs = null;
+	     
+		try {
+			String query = "SELECT name FROM products WHERE name = ?";
+			con = ConnectionUtil.getConnection();
+        ps = con.prepareStatement(query);
+        ps.setString(1, prodName);
+        rs = ps.executeQuery();
+        
+        if(rs.next()) {
+      	  throw new PersistanceException("product already exists");		
+        }
+		}catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println(e.getMessage());
+        throw new PersistanceException(e.getMessage());
+    
+    } finally {
+        ConnectionUtil.close(con, ps);
+    }
+	}
+	
+	public void checkCategoryIdExist(int CategoryId)throws PersistanceException{
+		Connection con = null;
+	     PreparedStatement ps = null;
+	     ResultSet rs = null;
+	     
+		try {
+			String query = "SELECT name FROM categories WHERE id = ?";
+			con = ConnectionUtil.getConnection();
+          ps = con.prepareStatement(query);
+          ps.setInt(1, CategoryId);
+          rs = ps.executeQuery();
+          
+          if(rs.next()) {
+          	System.out.println("category exists");
+          }else {
+          	throw new PersistanceException("category doesn't exist");
+          }		
+		} catch (SQLException e) {
+			
+          e.printStackTrace();
+          System.out.println(e.getMessage());
+          throw new RuntimeException(e);
+      
+      } finally {
+          ConnectionUtil.close(con, ps);
+      }
+	}
+	
+	public void checkProductIdExist(int id) throws PersistanceException{
+		
+		Connection con = null;
+	     PreparedStatement ps = null;
+	     ResultSet rs = null;
+	     
+		try {
+			String query = "SELECT name FROM products WHERE id = ?";
+			con = ConnectionUtil.getConnection();
+          ps = con.prepareStatement(query);
+          ps.setInt(1, id);
+          rs = ps.executeQuery();
+          
+          if(rs.next()) {
+          	System.out.println("product exists");
+          }else {
+          	throw new PersistanceException("product doesn't exist");
+          }		
+		} catch (SQLException e) {
+			
+          e.printStackTrace();
+          System.out.println(e.getMessage());
+          throw new PersistanceException(e.getMessage());
+      
+      } finally {
+          ConnectionUtil.close(con, ps);
+      }
+	}
 }
+	
+

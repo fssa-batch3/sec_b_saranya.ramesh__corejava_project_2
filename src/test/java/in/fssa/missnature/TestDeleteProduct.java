@@ -15,7 +15,7 @@ class TestDeleteProduct {
 		ProductService productService = new ProductService();
 
 		Product newProduct = new Product();
-		newProduct.setId(4);
+		newProduct.setId(3);
 		assertDoesNotThrow(() ->{
 			productService.deleteProduct(newProduct.getId());
 		});
