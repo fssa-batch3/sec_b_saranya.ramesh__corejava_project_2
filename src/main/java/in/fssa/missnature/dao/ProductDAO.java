@@ -28,7 +28,7 @@ public class ProductDAO implements ProductInterface {
 		PreparedStatement ps = null;
 
 		try {
-			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, ingredients, benefits, howToUse, shelfLife) VALUES (?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1,product.getName());
@@ -37,10 +37,13 @@ public class ProductDAO implements ProductInterface {
 			ps.setInt(4, product.getWeight());
 			ps.setString(5, product.getQuantityUnit().toString());
 			ps.setInt(6, product.getPrice());
-			ps.setString(7, product.getIngredients());
-			ps.setString(8, product.getBenefits());
-			ps.setString(9, product.getHowToUse());
-			ps.setString(10, product.getShelfLife());
+			ps.setString(7, product.getImage());
+			ps.setString(8, product.getSkinType().toString());
+			ps.setString(9, product.getProductType().toString());
+			ps.setString(10, product.getIngredients());
+			ps.setString(11, product.getBenefits());
+			ps.setString(12, product.getHowToUse());
+			ps.setString(13, product.getShelfLife());
 			
 			ps.executeUpdate();
 			
@@ -54,6 +57,110 @@ public class ProductDAO implements ProductInterface {
 		finally {
 			ConnectionUtil.close(conn, ps);
 		}
+	}
+	/**
+	 * 
+	 * @param skinType
+	 * @return
+	 * @throws PersistanceException
+	 */
+	public Set<Product> listProductBySkinType(String skinType)throws PersistanceException{
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Set<Product> listOfProductsBySkinType = new HashSet<>(); 
+		
+		try {
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE skinType = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, skinType);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setCategoryId(rs.getInt("categoryId"));
+				product.setBenefits(rs.getString("benefits"));
+				product.setDescription(rs.getString("description"));
+				product.setHowToUse(rs.getString("howToUse"));
+				product.setIngredients(rs.getString("ingredients"));
+				product.setPrice(rs.getInt("price"));
+				product.setImage(rs.getString("image"));
+				product.setSkinType(Product.SkinType.valueOf(rs.getString("skinType")));
+				product.setProductType(Product.ProductType.valueOf(rs.getString("productType")));
+				product.setShelfLife(rs.getString("shelfLife"));
+				product.setWeight(rs.getInt("weight"));
+				product.setCreatedAt(rs.getString("createdAt"));
+				product.setModifiedAt(rs.getString("modifiedAt"));
+				product.setQuantityUnit(Product.QuantityUnit.valueOf(rs.getString("quantityUnit")));
+				
+				listOfProductsBySkinType.add(product);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistanceException(e.getMessage());
+		}
+		finally {
+			ConnectionUtil.close(conn, ps);
+		}
+		return listOfProductsBySkinType;
+		
+	}
+	/**
+	 * 
+	 * @param productType
+	 * @return
+	 * @throws PersistanceException
+	 */
+		public Set<Product> listProductByProductType(String productType)throws PersistanceException{
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Set<Product> listOfProductsByProductType = new HashSet<>(); 
+		
+		try {
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE productType = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, productType);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setName(rs.getString("name"));
+				product.setCategoryId(rs.getInt("categoryId"));
+				product.setBenefits(rs.getString("benefits"));
+				product.setDescription(rs.getString("description"));
+				product.setHowToUse(rs.getString("howToUse"));
+				product.setIngredients(rs.getString("ingredients"));
+				product.setPrice(rs.getInt("price"));
+				product.setImage(rs.getString("image"));
+				product.setSkinType(Product.SkinType.valueOf(rs.getString("skinType")));
+				product.setProductType(Product.ProductType.valueOf(rs.getString("productType")));
+				product.setShelfLife(rs.getString("shelfLife"));
+				product.setWeight(rs.getInt("weight"));
+				product.setCreatedAt(rs.getString("createdAt"));
+				product.setModifiedAt(rs.getString("modifiedAt"));
+				product.setQuantityUnit(Product.QuantityUnit.valueOf(rs.getString("quantityUnit")));
+				
+				listOfProductsByProductType.add(product);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistanceException(e.getMessage());
+		}
+		finally {
+			ConnectionUtil.close(conn, ps);
+		}
+		return listOfProductsByProductType;
+		
 	}
 	/**
 	 * Updates the details of a product in the database.
@@ -70,7 +177,7 @@ public class ProductDAO implements ProductInterface {
 		try {
 		String query = "UPDATE products SET name = ?, categoryId = ?, description = ?, "
 		       + "weight = ?,quantityUnit =?, ingredients = ?, benefits = ?, "
-		       + "howToUse = ?, shelfLife = ?, isActive = ? WHERE id = ?";
+		       + "howToUse = ?, shelfLife = ?, price = ?, image = ?, skinType = ?, productType = ?, isActive = ? WHERE id = ?";
 		conn = ConnectionUtil.getConnection();
 		ps = conn.prepareStatement(query);
 		ps.setString(1, product.getName());
@@ -82,11 +189,12 @@ public class ProductDAO implements ProductInterface {
 		ps.setString(7, product.getBenefits());
 		ps.setString(8, product.getHowToUse());
 		ps.setString(9, product.getShelfLife());
-		ps.setBoolean(10, product.isActive());
-		ps.setInt(11, product.getId());
-		
-		
-		
+		ps.setInt(10, product.getPrice());
+		ps.setString(11, product.getImage());
+		ps.setString(12, product.getSkinType().toString());
+		ps.setString(13, product.getProductType().toString());
+		ps.setBoolean(14, product.isActive());
+		ps.setInt(15, product.getId());
 		
 		int rowsAffected = ps.executeUpdate();
 		
@@ -176,9 +284,10 @@ public class ProductDAO implements ProductInterface {
 	 * @return A set containing all products retrieved from the database.
 	 * @throws PersistanceException if there's an issue with database connectivity, SQL execution, or result retrieval.
 	 */
+	
 	@Override
 	public Set<Product> listAllProducts() throws PersistanceException{
-
+		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -186,7 +295,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> allProducts = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE isActive = 1";
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products ORDER BY id ASC";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -201,6 +310,9 @@ public class ProductDAO implements ProductInterface {
 				product.setHowToUse(rs.getString("howToUse"));
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
+				product.setImage(rs.getString("image"));
+				product.setSkinType(Product.SkinType.valueOf(rs.getString("skinType")));
+				product.setProductType(Product.ProductType.valueOf(rs.getString("productType")));
 				product.setShelfLife(rs.getString("shelfLife"));
 				product.setWeight(rs.getInt("weight"));
 				product.setCreatedAt(rs.getString("createdAt"));
@@ -230,7 +342,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> listOfProductsByCategoryId = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE categoryId = ? AND isActive = 1";
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE categoryId = ? AND isActive = 1 ORDER BY id ASC";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,categoryId);
@@ -246,6 +358,9 @@ public class ProductDAO implements ProductInterface {
 				product.setHowToUse(rs.getString("howToUse"));
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
+				product.setImage(rs.getString("image"));
+				product.setSkinType(Product.SkinType.valueOf(rs.getString("skinType")));
+				product.setProductType(Product.ProductType.valueOf(rs.getString("productType")));
 				product.setShelfLife(rs.getString("shelfLife"));
 				product.setWeight(rs.getInt("weight"));
 				product.setCreatedAt(rs.getString("createdAt"));
@@ -282,7 +397,7 @@ public class ProductDAO implements ProductInterface {
 		Product product = null;
 		
 		try {
-			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE id = ? AND isActive = 1";
+			String query = "SELECT name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE id = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,productId);
@@ -298,6 +413,9 @@ public class ProductDAO implements ProductInterface {
 				product.setHowToUse(rs.getString("howToUse"));
 				product.setIngredients(rs.getString("ingredients"));
 				product.setPrice(rs.getInt("price"));
+				product.setImage(rs.getString("image"));
+				product.setSkinType(Product.SkinType.valueOf(rs.getString("skinType")));
+				product.setProductType(Product.ProductType.valueOf(rs.getString("productType")));
 				product.setShelfLife(rs.getString("shelfLife"));
 				product.setWeight(rs.getInt("weight"));
 				product.setCreatedAt(rs.getString("createdAt"));
@@ -397,6 +515,7 @@ public class ProductDAO implements ProductInterface {
           ConnectionUtil.close(con, ps);
       }
 	}
+	
 }
 	
 

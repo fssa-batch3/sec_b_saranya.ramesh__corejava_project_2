@@ -35,7 +35,7 @@ public class ProductValidator {
 		validateWeight(product.getWeight());
 		validatePrice(product.getPrice());
 		validateCategoryId(product.getCategoryId());
-		
+		validateImage(product.getImage());
 	}
 	
 	/**
@@ -53,7 +53,12 @@ public class ProductValidator {
             throw new ValidationException("Name does not match the pattern");
         }
     }
-	
+	/**
+	 * 
+	 * @param uerName
+	 * @throws ValidationException
+	 * @throws PersistanceException
+	 */
 	public void validateNameAlreadyExist(String uerName)throws ValidationException, PersistanceException{
 		
 		ProductDAO productDAO = new ProductDAO();
@@ -72,10 +77,20 @@ public class ProductValidator {
 	
 	/**
 	 * 
+	 * @param image
+	 * @throws ValidationException
+	 */
+	public void validateImage(String image)throws ValidationException{
+		
+		StringUtil.rejectIfInvalidString(image, "image");
+		
+	}
+	
+	/**
+	 * 
 	 * @param ingredients
 	 * @throws ValidationException
 	 */
-	
 	public void validateIngredients(String ingredients)throws ValidationException{
 		
 		StringUtil.rejectIfInvalidString(ingredients, "Ingredients");

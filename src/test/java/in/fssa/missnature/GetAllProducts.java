@@ -28,7 +28,7 @@ class GetAllProducts {
 		 ProductService productService = new ProductService();
 		 
 		 try {
-			 Product product = productService.FindProductDetailsByProductId(2);
+			 Product product = productService.findProductDetailsByProductId(1);
 			 System.out.println(product);
 			 
 		 }catch (Exception e) {
@@ -48,4 +48,25 @@ class GetAllProducts {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void getAllProductsBySkinType(){
+		ProductService productService = new ProductService();
+		try {
+			Set<Product> product = productService.listAllProductsBySkinType("OILY");
+			System.out.println(product);
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Test 
+	void getAllProductsByProdType() {
+		ProductService productService = new ProductService();
+		try {
+			Set<Product> product = productService.listAllProductByProductType("CREAMS");
+			System.out.println(product);
+	}catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 }

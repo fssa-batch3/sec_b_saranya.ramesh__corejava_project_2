@@ -17,16 +17,19 @@ class TestCreateProduct {
 		
 		ProductService productService = new ProductService();
 		Product product = new Product();
-		product.setName("aloevera Shampoo");
+		product.setName("Body butter");
 		product.setCategoryId(2);
 		product.setDescription("Formulated with pure Ayurvedic herbs, this Neem Shampoo is known for its excellent antifungal & antibacterial properties and is suitable for all hair types");
 		product.setBenefits("It improves root strength, reduce scalp dryness, prevent hair fall");
-		product.setIngredients("pure and clean neem leaves, essential oil, etc....");
+		product.setIngredients("Pure and clean neem leaves, essential oil, etc....");
 		product.setWeight(100);
 		product.setQuantityUnit(Product.QuantityUnit.ML);
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/NEEM-SHAMPOO.jpg");
+		product.setSkinType(Product.SkinType.OTHERS);
+		product.setProductType(Product.ProductType.OTHERS);
 		assertDoesNotThrow(() ->{
 			productService.createProduct(product);
 		});
@@ -121,7 +124,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
-		
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		product.toString(); 
 
 		Exception exception = assertThrows(ValidationException.class, () ->{
@@ -149,6 +154,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -177,6 +185,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -205,6 +216,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -233,6 +247,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -261,6 +278,9 @@ class TestCreateProduct {
 		product.setHowToUse("");
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -289,6 +309,9 @@ class TestCreateProduct {
 		product.setHowToUse(null);
 		product.setShelfLife("3months");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -317,7 +340,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife(null);
 		product.setPrice(300);
-		
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		product.toString();
 
 			Exception exception = assertThrows(ValidationException.class, () ->{
@@ -345,6 +370,9 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("");
 		product.setPrice(300);
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 		
 		product.toString();
 
@@ -374,6 +402,9 @@ class TestCreateProduct {
 		product.setShelfLife("3 months");
 		product.setPrice(300);
 		product.toString();
+		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/SAFFRON-GEL.jpg");
+		product.setSkinType(Product.SkinType.OILY);
+		product.setProductType(Product.ProductType.CREAMS);
 
 			Exception exception = assertThrows(ValidationException.class, () ->{
 				productService.createProduct(product);

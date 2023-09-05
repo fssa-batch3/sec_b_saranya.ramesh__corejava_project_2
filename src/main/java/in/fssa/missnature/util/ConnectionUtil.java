@@ -21,14 +21,14 @@ public class ConnectionUtil {
 
 	// cloud database
 	
-         url = System.getenv("DATABASE_HOSTNAME");
-         userName = System.getenv("DATABASE_USERNAME");
-         password = System.getenv("DATABASE_PASSWORD");
+//         url = System.getenv("DATABASE_HOSTNAME");
+//         userName = System.getenv("DATABASE_USERNAME");
+//         password = System.getenv("DATABASE_PASSWORD");
     
     	// local 
-//    	url = "jdbc:mysql://164.52.216.41:3306/saranya_ramesh__corejava_project";
-//    	userName = "13WSR0mXUsnO";
-//    	password = "7231823c-1c64-446b-9f0b-aa0a287ef8f5";
+    	url = "jdbc:mysql://164.52.216.41:3306/saranya_ramesh__corejava_project";
+    	userName = "13WSR0mXUsnO";
+    	password = "7231823c-1c64-446b-9f0b-aa0a287ef8f5";
     		
     
 		Connection connection = null;

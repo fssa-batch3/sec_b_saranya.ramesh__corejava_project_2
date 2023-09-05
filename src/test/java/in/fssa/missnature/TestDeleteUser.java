@@ -11,11 +11,11 @@ class TestDeleteUser {
 
 	@Test
 	 void testDeleteUser() {
-		
+
 		UserService userService = new UserService();
 
 		User newUser = new User();
-		newUser.setId(3);
+		newUser.setId(1);
 		assertDoesNotThrow(() ->{
 			userService.deleteUser(newUser.getId());
 		});

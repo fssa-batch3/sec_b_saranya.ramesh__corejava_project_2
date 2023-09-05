@@ -14,14 +14,39 @@ public class Product {
 	private int categoryId;
 	private String createdAt;
 	private String modifiedAt;
+	private String image;
+	private SkinType skinType;
+	private ProductType productType;
 	private QuantityUnit quantityUnit;
 	private boolean isActive = true;
-
 	
+	public enum ProductType{
+		TONER, SERUM, FACE_WASH, CREAMS, OTHERS
+	}
+	public enum SkinType{
+		OILY, NORMAL, DRY, SENSITIVE, ALL_SKIN_TYPE, OTHERS
+	}
 	public enum QuantityUnit{
 		G, ML
 	}
-	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public SkinType getSkinType() {
+		return skinType;
+	}
+	public void setSkinType(SkinType skinType) {
+		this.skinType = skinType;
+	}
+	public ProductType getProductType() {
+		return productType;
+	}
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
+	}
 	public QuantityUnit getQuantityUnit() {
 		return quantityUnit;
 	}

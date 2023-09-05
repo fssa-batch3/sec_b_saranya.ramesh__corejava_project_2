@@ -43,6 +43,7 @@ public class UserValidator {
 	 * @param id
 	 * @throws ValidationException
 	 */
+	
 	public  void validateUser(int UserId)throws ValidationException{
 		
 		if(UserId < 0) {
@@ -74,7 +75,6 @@ public class UserValidator {
         } finally {
             ConnectionUtil.close(con, ps);
         }
-
 	}
 	
     /**

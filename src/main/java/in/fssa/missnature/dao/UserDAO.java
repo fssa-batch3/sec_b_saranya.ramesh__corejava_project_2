@@ -152,7 +152,6 @@ public class UserDAO implements UserInterface{
         PreparedStatement ps = null;
         ResultSet rs = null;
         
-        
         try {
             
             String query = "SELECT name, email FROM users WHERE isActive=1 AND email=?";
@@ -183,7 +182,6 @@ public class UserDAO implements UserInterface{
         PreparedStatement ps = null;
         ResultSet rs = null;
         
-        
         try {
             
             String query = "SELECT name FROM users WHERE isActive=1 AND mobileNumber=?";
@@ -193,7 +191,7 @@ public class UserDAO implements UserInterface{
             rs = ps.executeQuery();
             
             while(rs.next()) {
-                throw new PersistanceException("This user is already exist");
+                throw new PersistanceException("This mobileNumber is already exist");
             }
         
         } catch (SQLException e) {
@@ -207,4 +205,62 @@ public class UserDAO implements UserInterface{
         }
 	}
 	
+	/**
+	 *
+	 * @param emailId
+	 * @param password
+	 * @return
+	 * @throws PersistanceException
+	 * @throws SQLException
+	 */
+	
+	public boolean userLogin(String emailId, String password) throws PersistanceException, SQLException {
+	    try (Connection connection = ConnectionUtil.getConnection()) {
+	        if (emailExists(emailId, connection)) {
+	            String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ?";
+	            try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
+	                psmt.setString(1, emailId);
+	                psmt.setString(2, password);
+
+	                try (ResultSet rs = psmt.executeQuery()) {
+	                    if (rs.next()) {
+	                        int count = rs.getInt(1);
+	                        if (count > 0) {
+	                            return true;
+	                        } else {
+	                            throw new PersistanceException("Error while validating user credentials: Incorrect Password");
+	                        }
+	                    }
+	                }
+	            }
+	        } else {
+	            throw new PersistanceException("Error while validating user credentials: Invalid Email Id");
+	        }
+	    }
+	    return false;
+	}
+
+	 
+	/**
+	 * 
+	 * @param email
+	 * @param connection
+	 * @return
+	 * @throws PersistanceException
+	 */
+	 
+	private boolean emailExists(String email, Connection connection) throws PersistanceException {
+        String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ?";
+        try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
+            psmt.setString(1, email);
+            try (ResultSet rs = psmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new PersistanceException("Error while checking email existence: " + e.getMessage());
+        }
+        return false;
+    }
 }

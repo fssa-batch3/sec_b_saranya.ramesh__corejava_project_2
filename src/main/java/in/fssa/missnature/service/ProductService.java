@@ -22,6 +22,32 @@ public class ProductService {
 	}
 	/**
 	 * 
+	 * @param skinType
+	 * @return
+	 * @throws Exception
+	 */
+	public Set<Product> listAllProductsBySkinType(String skinType)throws Exception{
+		
+		ProductDAO productDAO = new ProductDAO();
+		Set<Product> allProdBySkinType = productDAO.listProductBySkinType(skinType);
+		
+		return allProdBySkinType;
+	}
+	/**
+	 * 
+	 * @param productType
+	 * @return
+	 * @throws Exception
+	 */
+	public Set<Product> listAllProductByProductType(String productType)throws Exception{
+		
+		ProductDAO productDAO = new ProductDAO();
+		Set<Product> allProdByProdType = productDAO.listProductByProductType(productType);
+		
+		return allProdByProdType;
+	}
+	/**
+	 * 
 	 * @param category_id
 	 * @return
 	 * @throws Exception
@@ -43,7 +69,7 @@ public class ProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Product FindProductDetailsByProductId(int productId)throws Exception{
+	public Product findProductDetailsByProductId(int productId)throws Exception{
 		
 		ProductValidator validator = new ProductValidator();
 		validator.validateProductId(productId);
@@ -88,7 +114,8 @@ public class ProductService {
 		validator.validateBenefits(product.getBenefits());
 		validator.validateHowToUse(product.getHowToUse());
 		validator.validateShelfLife(product.getShelfLife());
-		
+		validator.validatePrice(product.getPrice());
+		validator.validateImage(product.getImage());
 		ProductDAO productDAO = new ProductDAO();
 		productDAO.updateProduct(product);
 									

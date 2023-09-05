@@ -20,7 +20,7 @@ class TestCreateCategory {
 		CategoryService categoryService = new CategoryService();
 
 		Categories newCategory = new Categories();
-		newCategory.setName("hair care combo");
+		newCategory.setName("skin care combo");
 		assertDoesNotThrow(() ->{
 			categoryService.createCategory(newCategory);
 		});
