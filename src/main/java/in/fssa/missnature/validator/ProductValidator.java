@@ -163,7 +163,7 @@ public class ProductValidator {
 		
 		if(productId <= 0) {
 			throw new ValidationException("Id cannot be negative or zero");
-		}
+		} 
 		
 		ProductDAO productDAO = new ProductDAO();
 		productDAO.checkProductIdExist(productId);

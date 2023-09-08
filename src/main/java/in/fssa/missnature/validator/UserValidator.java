@@ -10,6 +10,7 @@ import in.fssa.missnature.util.*;
 import in.fssa.missnature.dao.UserDAO;
 import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.exception.ValidationException;
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.util.StringUtil;
 
@@ -62,15 +63,15 @@ public class UserValidator {
             rs = ps.executeQuery();
             
             if(rs.next()) {
-            	System.out.println("user exists");
+            	Logger.info("user exists");
             }else {
             	throw new ValidationException("user doesn't exist");
             }		
 		} catch (SQLException e) {
 			
             e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+            Logger.info(e.getMessage());
+            throw new ValidationException(e.getMessage());
         
         } finally {
             ConnectionUtil.close(con, ps);

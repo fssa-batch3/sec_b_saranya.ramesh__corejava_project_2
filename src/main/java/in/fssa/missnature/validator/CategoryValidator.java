@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import in.fssa.missnature.exception.ValidationException;
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.Categories;
 import in.fssa.missnature.util.ConnectionUtil;
 
@@ -46,8 +47,8 @@ public class CategoryValidator {
 		} catch (SQLException e) {
             
             e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+            Logger.info(e.getMessage());
+            throw new ValidationException(e.getMessage());
         
         } finally {
             ConnectionUtil.close(con, ps);
@@ -99,8 +100,8 @@ public class CategoryValidator {
 		} catch (SQLException e) {
            
            e.printStackTrace();
-           System.out.println(e.getMessage());
-           throw new RuntimeException(e);
+           Logger.info(e.getMessage());
+           throw new ValidationException(e.getMessage());
        
        } finally {
            ConnectionUtil.close(con, ps);

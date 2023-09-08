@@ -17,7 +17,6 @@ public class ProductService {
 		
 		ProductDAO productDAO = new ProductDAO();
 		Set<Product> allProducts = productDAO.listAllProducts();
-		
 		return allProducts;
 	}
 	/**
@@ -78,7 +77,7 @@ public class ProductService {
 		Product product = productDAO.findProductDetailsByProductId(productId);
 		
 		return product;
-		
+		 
 	}
 /**
  * 
@@ -118,7 +117,6 @@ public class ProductService {
 		validator.validateImage(product.getImage());
 		ProductDAO productDAO = new ProductDAO();
 		productDAO.updateProduct(product);
-									
 	}
 	/**
 	 * 

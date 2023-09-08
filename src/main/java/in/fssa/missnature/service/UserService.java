@@ -14,11 +14,11 @@ public class UserService {
 	public void createUser(User newUser) throws Exception {
 		
 		UserValidator userValidator = new UserValidator();
-	
+		
 			userValidator.validate(newUser);
 			
-			UserDAO userDAO = new UserDAO();
-					
+			UserDAO userDAO = new UserDAO();	
+			
 			userDAO.create(newUser);
 	}
 	

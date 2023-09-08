@@ -21,6 +21,5 @@ public class CategoryService {
 		CategoryValidator.validateName(newCategoryName);
 		CategoryDAO categoryDAO = new CategoryDAO();
 		categoryDAO.updateName(id, newCategoryName);
-		
 	}
 }

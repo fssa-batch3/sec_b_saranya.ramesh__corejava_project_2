@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.interfacesfile.UserInterface;
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.util.ConnectionUtil;
 
@@ -16,7 +17,6 @@ import in.fssa.missnature.util.ConnectionUtil;
  *
  */
 public class UserDAO implements UserInterface{
-
 	
 	/**
 	 * Below the code for creating the new user
@@ -40,11 +40,11 @@ public class UserDAO implements UserInterface{
 			
 			ps.executeUpdate();
 			
-			System.out.println("User created Successfully");
+			Logger.info("User created Successfully");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -72,7 +72,7 @@ public class UserDAO implements UserInterface{
 			
 			int rowsAffected = ps.executeUpdate();
 			if(rowsAffected > 0) {
-				System.out.println("Password updated successfully");
+				Logger.info("Password updated successfully");
 			}
 		} catch (SQLException e) {
 			throw new PersistanceException(e.getMessage());	
@@ -102,7 +102,7 @@ public class UserDAO implements UserInterface{
 			ps.setInt(1, userId);
 			ps.executeUpdate();
 			
-			System.out.println("User deleted Successfully");
+			Logger.info("User deleted Successfully");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -111,7 +111,6 @@ public class UserDAO implements UserInterface{
 		finally {
 			ConnectionUtil.close(conn, ps);
 		}
-		
 	}
 
 	/**
@@ -135,7 +134,7 @@ public class UserDAO implements UserInterface{
 			
 			int rowsAffected = ps.executeUpdate();
 			if(rowsAffected > 0) {
-				System.out.println("Name updated successfully");
+				Logger.info("Name updated successfully");
 			}
 		} catch (SQLException e) {
 			throw new PersistanceException(e.getMessage());	
@@ -167,7 +166,7 @@ public class UserDAO implements UserInterface{
         } catch (SQLException e) {
             
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            Logger.info(e.getMessage());
             throw new PersistanceException(e.getMessage());
         
         } finally {
@@ -197,7 +196,7 @@ public class UserDAO implements UserInterface{
         } catch (SQLException e) {
             
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            Logger.info(e.getMessage());
             throw new PersistanceException(e.getMessage());
         
         } finally {

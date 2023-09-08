@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.interfacesfile.CategoryInterface;
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.Categories;
 import in.fssa.missnature.util.ConnectionUtil;
 
 public class CategoryDAO implements CategoryInterface{
-
 	/**
 	 * Creates a new category in the database.
 	 *
@@ -30,11 +30,11 @@ public class CategoryDAO implements CategoryInterface{
 			
 			ps.executeUpdate();
 			
-			System.out.println("Category created Successfully");
+			Logger.info("Category created Successfully");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -63,7 +63,7 @@ public class CategoryDAO implements CategoryInterface{
 			
 			int rowsAffected = ps.executeUpdate();
 			if(rowsAffected > 0) {
-				System.out.println("category name updated successfully");
+				Logger.info("category name updated successfully");
 			}
 		} catch (SQLException e) {
 			throw new PersistanceException(e.getMessage());	

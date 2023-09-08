@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.missnature.exception.ValidationException;
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.Categories;
 import in.fssa.missnature.service.CategoryService;
 
@@ -34,9 +35,9 @@ class TestCreateCategory {
 		String expectedMessage = "Invalid category input";
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
-		System.out.println(actualMessage);
+		Logger.info(actualMessage);
 	}
-	
+	  
 	@Test
 	 void testCreateCategoryWithNameNull() {
 		
@@ -72,7 +73,7 @@ class TestCreateCategory {
 	});
 	String expectedMessage = "Name cannot be null or empty";
 	String actualMessage = exception.getMessage();
-	System.out.println(actualMessage);
+	Logger.info(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 
@@ -92,7 +93,7 @@ class TestCreateCategory {
 	});
 	String expectedMessage = "Name should contains only alphabets";
 	String actualMessage = exception.getMessage();
-	System.out.println(actualMessage);
+	Logger.info(actualMessage);
 	assertTrue(expectedMessage.equals(actualMessage));
 }
 	

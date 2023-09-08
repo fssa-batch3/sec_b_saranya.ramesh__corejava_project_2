@@ -21,7 +21,7 @@ import in.fssa.missnature.service.UserService;
 			userService.updateName(updateUser.getId(),updateUser.getName());
 		});
 	}
-									
+		  							
 	@Test
 	 void testUpdateUserPassword() {
 		
@@ -35,5 +35,3 @@ import in.fssa.missnature.service.UserService;
 		});
 	}
 }
-	
-

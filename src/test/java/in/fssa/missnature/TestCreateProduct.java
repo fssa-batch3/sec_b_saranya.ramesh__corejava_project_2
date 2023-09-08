@@ -27,14 +27,14 @@ class TestCreateProduct {
 		product.setHowToUse("Take required amount of neem shampoo. Mix with warm water massage on yoy scalp for 2 to 3 minutes then rinse it off. Use twice a week");
 		product.setShelfLife("3months");
 		product.setPrice(300);
-		product.setImage("https://missnatura.in/wp-content/uploads/2022/04/NEEM-SHAMPOO.jpg");
+		product.setImage("https://iili.io/J9anywQ.md.webp");
 		product.setSkinType(Product.SkinType.OTHERS);
 		product.setProductType(Product.ProductType.OTHERS);
 		assertDoesNotThrow(() ->{
 			productService.createProduct(product);
 		});
 	}
-	
+	  
 	@Test    
 	 void testCreateProductWithInvalidInput() {
 		

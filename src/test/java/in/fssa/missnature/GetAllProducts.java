@@ -24,9 +24,8 @@ class GetAllProducts {
 	
 	@Test
 	 void getProductDetailsByProductId() {
-		
-		 ProductService productService = new ProductService();
-		 
+
+		 ProductService productService = new ProductService();	 
 		 try {
 			 Product product = productService.findProductDetailsByProductId(1);
 			 System.out.println(product);
@@ -35,7 +34,6 @@ class GetAllProducts {
 		        e.printStackTrace();
 		    }
 	}
-
 	@Test
 	 void getAll(){
 		ProductService productService = new ProductService();
@@ -58,7 +56,7 @@ class GetAllProducts {
 	        e.printStackTrace();
 	    }
 	}
-	
+	  
 	@Test 
 	void getAllProductsByProdType() {
 		ProductService productService = new ProductService();

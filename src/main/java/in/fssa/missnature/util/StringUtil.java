@@ -17,3 +17,4 @@ public static void rejectIfInvalidString(String input, String inputName) throws 
 		}
 	}
 }
+ 

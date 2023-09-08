@@ -9,6 +9,7 @@ import java.util.Set;
 
 import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.interfacesfile.ProductInterface;
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.Product;
 import in.fssa.missnature.util.ConnectionUtil;
 
@@ -26,7 +27,7 @@ public class ProductDAO implements ProductInterface {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
-
+   
 		try {
 			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
@@ -44,14 +45,12 @@ public class ProductDAO implements ProductInterface {
 			ps.setString(11, product.getBenefits());
 			ps.setString(12, product.getHowToUse());
 			ps.setString(13, product.getShelfLife());
-			
 			ps.executeUpdate();
-			
-			System.out.println("Product created Successfully");
+			Logger.info("Product created Successfully");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -101,7 +100,7 @@ public class ProductDAO implements ProductInterface {
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -153,7 +152,7 @@ public class ProductDAO implements ProductInterface {
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -199,14 +198,14 @@ public class ProductDAO implements ProductInterface {
 		int rowsAffected = ps.executeUpdate();
 		
 		if (rowsAffected > 0) {
-		System.out.println("Product updated successfully");
+		Logger.info("Product updated successfully");
 		} else {
-		System.out.println("product updation fails");
+		Logger.info("product updation fails");
 		}
 		
 		} catch (SQLException e) {
 		e.printStackTrace();
-		System.out.println(e.getMessage());
+		Logger.info(e.getMessage());
 		throw new PersistanceException("Error updating product");
 		}
 		finally {
@@ -235,9 +234,9 @@ public class ProductDAO implements ProductInterface {
 			
 			int rowsAffected = ps.executeUpdate();
 			if(rowsAffected > 0) {
-				System.out.println("Price updated successfully");
+				Logger.info("Price updated successfully");
 			}else {
-				System.out.println("price updation fails");
+				Logger.info("price updation fails");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -267,7 +266,7 @@ public class ProductDAO implements ProductInterface {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 			
-			System.out.println("Product deleted Successfully");
+			Logger.info("Product deleted Successfully");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -295,7 +294,7 @@ public class ProductDAO implements ProductInterface {
 		Set<Product> allProducts = new HashSet<>(); 
 		
 		try {
-			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products ORDER BY id ASC";
+			String query = "SELECT id, name, categoryId, description, weight, quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, createdAt, modifiedAt FROM products WHERE isActive = 1 ORDER BY id ASC";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -323,7 +322,7 @@ public class ProductDAO implements ProductInterface {
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -371,7 +370,7 @@ public class ProductDAO implements ProductInterface {
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -425,7 +424,7 @@ public class ProductDAO implements ProductInterface {
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -451,7 +450,7 @@ public class ProductDAO implements ProductInterface {
         }
 		}catch (SQLException e) {
         e.printStackTrace();
-        System.out.println(e.getMessage());
+        Logger.info(e.getMessage());
         throw new PersistanceException(e.getMessage());
     
     } finally {
@@ -459,33 +458,39 @@ public class ProductDAO implements ProductInterface {
     }
 	}
 	
-	public void checkCategoryIdExist(int CategoryId)throws PersistanceException{
-		Connection con = null;
-	     PreparedStatement ps = null;
-	     ResultSet rs = null;
-	     
-		try {
-			String query = "SELECT name FROM categories WHERE id = ?";
-			con = ConnectionUtil.getConnection();
-          ps = con.prepareStatement(query);
-          ps.setInt(1, CategoryId);
-          rs = ps.executeQuery();
-          
-          if(rs.next()) {
-          	System.out.println("category exists");
-          }else {
-          	throw new PersistanceException("category doesn't exist");
-          }		
-		} catch (SQLException e) {
-			
-          e.printStackTrace();
-          System.out.println(e.getMessage());
-          throw new RuntimeException(e);
-      
-      } finally {
-          ConnectionUtil.close(con, ps);
-      }
+	public void checkCategoryIdExist(int categoryId) throws PersistanceException {
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        String query = "SELECT name FROM categories WHERE id = ?";
+	        con = ConnectionUtil.getConnection();
+	        ps = con.prepareStatement(query);
+	        ps.setInt(1, categoryId);
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            Logger.info("Category exists");
+	        } else {
+	            throw new PersistanceException("Category doesn't exist");
+	        }
+	    } catch (SQLException e) {
+	        // Log the exception or print the error message
+	        e.printStackTrace();
+	        throw new PersistanceException("Database error: " + e.getMessage());
+	    } finally {
+	        if (rs != null) {
+	            try {
+	                rs.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        ConnectionUtil.close(con, ps);
+	    }
 	}
+
 	
 	public void checkProductIdExist(int id) throws PersistanceException{
 		
@@ -501,21 +506,18 @@ public class ProductDAO implements ProductInterface {
           rs = ps.executeQuery();
           
           if(rs.next()) {
-          	System.out.println("product exists");
+          	Logger.info("product exists");
           }else {
           	throw new PersistanceException("product doesn't exist");
           }		
 		} catch (SQLException e) {
 			
-          e.printStackTrace();
-          System.out.println(e.getMessage());
+//          e.printStackTrace();
+//          Logger.info(e.getMessage());
           throw new PersistanceException(e.getMessage());
       
       } finally {
           ConnectionUtil.close(con, ps);
       }
-	}
-	
+	}	
 }
-	
-
