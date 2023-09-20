@@ -43,5 +43,3 @@ FOREIGN KEY (category_id) REFERENCES category(id)
 INSERT INTO products(name,category_id, description, product_weight, price, ingredients, benefits, how_to_use, self_life)
 values('saffron gel',1, 'This gel is a natural skin brightener which will help get a more uniform & brighter complexion. It slowly evens out the skin tone by eliminating age spots, scars, & melisma. For a younger & bright looking skin, use regularly.', '100ml', 120,'Pure kashmiri saffron with aloe vera gel','It calms your skin and makes your skin supple and plumpy','Use twice a day for better result after face wash','3 months');
 select * from products;
-
-

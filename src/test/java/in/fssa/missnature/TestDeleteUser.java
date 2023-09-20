@@ -15,9 +15,9 @@ class TestDeleteUser {
 		UserService userService = new UserService();
 
 		User newUser = new User();
-		newUser.setId(1);
+		newUser.setEmail("saran@gmail.com");
 		assertDoesNotThrow(() ->{
-			userService.deleteUser(newUser.getId());
+			userService.deleteUser(newUser.getEmail());
 		});
 	}
 }

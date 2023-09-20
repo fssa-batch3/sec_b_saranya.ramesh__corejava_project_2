@@ -3,6 +3,9 @@ package in.fssa.missnature.service;
 import java.util.Set;
 
 import in.fssa.missnature.dao.*;
+import in.fssa.missnature.exception.PersistanceException;
+import in.fssa.missnature.exception.ServiceException;
+import in.fssa.missnature.exception.ValidationException;
 import in.fssa.missnature.model.Product;
 import in.fssa.missnature.validator.ProductValidator;
 
@@ -13,10 +16,15 @@ public class ProductService {
  * @return
  * @throws Exception
  */
-	public Set<Product> listAllProduct()throws Exception{
+	public Set<Product> listAllProduct()throws ServiceException{
 		
 		ProductDAO productDAO = new ProductDAO();
-		Set<Product> allProducts = productDAO.listAllProducts();
+		Set<Product> allProducts;
+		try {
+			allProducts = productDAO.listAllProducts();
+		} catch (PersistanceException e) {
+			throw new ServiceException("Error while listing the product" + e.getMessage());
+		}
 		return allProducts;
 	}
 	/**
@@ -25,10 +33,15 @@ public class ProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Set<Product> listAllProductsBySkinType(String skinType)throws Exception{
+	public Set<Product> listAllProductsBySkinType(String skinType)throws ServiceException{
 		
 		ProductDAO productDAO = new ProductDAO();
-		Set<Product> allProdBySkinType = productDAO.listProductBySkinType(skinType);
+		Set<Product> allProdBySkinType;
+		try {
+			allProdBySkinType = productDAO.listProductBySkinType(skinType);
+		} catch (PersistanceException e) {
+			throw new ServiceException("Error while listing product by skin type" + e.getMessage());
+		}
 		
 		return allProdBySkinType;
 	}
@@ -38,10 +51,16 @@ public class ProductService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Set<Product> listAllProductByProductType(String productType)throws Exception{
+	public Set<Product> listAllProductByProductType(String productType)throws ServiceException{
 		
 		ProductDAO productDAO = new ProductDAO();
-		Set<Product> allProdByProdType = productDAO.listProductByProductType(productType);
+		Set<Product> allProdByProdType;
+		try {
+			allProdByProdType = productDAO.listProductByProductType(productType);
+		}
+		catch (PersistanceException e) {
+			throw new ServiceException(e.getMessage());
+		}
 		
 		return allProdByProdType;
 	}
@@ -52,30 +71,40 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	
-	public Set<Product> findProductDetailByCategoryId(int categoryId) throws Exception {
+	public Set<Product> findProductDetailByCategoryId(int categoryId) throws ServiceException {
 	    
 		ProductValidator validator = new ProductValidator();
+		Set<Product> products;
+		try {
 	    validator.validateCategoryId(categoryId);
-	    
 	    ProductDAO productDAO = new ProductDAO();
-	    Set<Product> products = productDAO.listallProductsByCategoryId(categoryId);
-	    
+	    products = productDAO.listallProductsByCategoryId(categoryId);
+		}
+		catch(PersistanceException | ValidationException e) {
+			throw new ServiceException(e.getMessage());
+		}
 	    return products;
 	}
+	
 	/**
 	 * 
 	 * @param product_id
 	 * @return
 	 * @throws Exception
 	 */
-	public Product findProductDetailsByProductId(int productId)throws Exception{
+	public Product findProductDetailsByProductId(int productId)throws ServiceException{
 		
 		ProductValidator validator = new ProductValidator();
+		Product product;
+		try {
+		
 		validator.validateProductId(productId);
-		
 		ProductDAO productDAO = new ProductDAO();
-		Product product = productDAO.findProductDetailsByProductId(productId);
-		
+		product = productDAO.findProductDetailsByProductId(productId);
+		}
+		catch(PersistanceException | ValidationException e) {
+			throw new ServiceException(e.getMessage());
+		}
 		return product;
 		 
 	}
@@ -85,25 +114,29 @@ public class ProductService {
  * @param price
  * @throws Exception
  */
-	public void updateProductPrice(int id, int price)throws Exception{
+	public void updateProductPrice(int id, int price)throws ServiceException{
 		
 		ProductValidator validator = new ProductValidator();
+		ProductDAO productDAO = new ProductDAO();
+		try {
 		validator.validateProductId(id);
 		validator.validatePrice(price);
-		
-		ProductDAO productDAO = new ProductDAO();
 		productDAO.updatePrice(id, price);
-		
+		}
+		catch(ValidationException | PersistanceException e) {
+			throw new ServiceException(e.getMessage());
+		}
 	}
 	/**
 	 * 
 	 * @param product
 	 * @throws Exception
 	 */
-	public void updateProduct(Product product) throws Exception{
+	public void updateProduct(Product product) throws ServiceException{
 		
 		ProductValidator validator = new ProductValidator();
-		
+		ProductDAO productDAO = new ProductDAO();
+		try {
 		validator.validateProductId(product.getId());
 		validator.validateName(product.getName());
 		validator.validateCategoryId(product.getCategoryId());
@@ -115,21 +148,30 @@ public class ProductService {
 		validator.validateShelfLife(product.getShelfLife());
 		validator.validatePrice(product.getPrice());
 		validator.validateImage(product.getImage());
-		ProductDAO productDAO = new ProductDAO();
+		
 		productDAO.updateProduct(product);
+		}
+		catch(PersistanceException | ValidationException e) {
+			throw new ServiceException(e.getMessage());
+		}
 	}
 	/**
 	 * 
 	 * @param product
 	 * @throws Exception
 	 */
-	public void createProduct(Product product)throws Exception{
+	public void createProduct(Product product)throws ServiceException{
 		
 		ProductValidator validator = new ProductValidator();
-		validator.validateProduct(product);
-		
 		ProductDAO productDAO = new ProductDAO();
+		
+		try {
+		validator.validateProduct(product);
 		productDAO.create(product);
+		}
+		 catch(PersistanceException | ValidationException e) {
+			 throw new ServiceException(e.getMessage());
+		 }
 		
 	}
 	/**
@@ -137,13 +179,19 @@ public class ProductService {
 	 * @param productId
 	 * @throws Exception
 	 */
-	public void deleteProduct(int productId) throws Exception{
+	public void deleteProduct(int productId) throws ServiceException{
 		
 		ProductValidator validator = new ProductValidator();
+		try {
 		validator.validateProductId(productId);
 		
 		ProductDAO productDAO = new ProductDAO();
 		productDAO.deleteProduct(productId);
+		}
+		
+		catch(PersistanceException |ValidationException e) {
+			throw new ServiceException(e.getMessage());
+		}
 		
 	}
 

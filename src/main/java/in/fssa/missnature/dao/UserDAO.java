@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import in.fssa.missnature.exception.PersistanceException;
 import in.fssa.missnature.interfacesfile.UserInterface;
 import in.fssa.missnature.logger.Logger;
+import in.fssa.missnature.model.Product;
 import in.fssa.missnature.model.User;
 import in.fssa.missnature.util.ConnectionUtil;
 
@@ -22,7 +23,7 @@ public class UserDAO implements UserInterface{
 	 * Below the code for creating the new user
 	 * @author SaranyaRamesh
 	 * @param newuser - this parameter refer the all user details 
-	 */
+	 */ 
 	@Override
 	public void create(User newuser)throws PersistanceException {
 		
@@ -31,19 +32,18 @@ public class UserDAO implements UserInterface{
 		
 		try {
 			String query = "INSERT INTO users (name,email,password,mobileNumber) VALUES (?,?,?,?)";
-			conn = ConnectionUtil.getConnection();
+			conn = ConnectionUtil.getConnection(); 
 			ps = conn.prepareStatement(query);
 			ps.setString(1, newuser.getName());
 			ps.setString(2, newuser.getEmail());
 			ps.setString(3, newuser.getPassword());
-			ps.setLong(4, newuser.getMobileNumber());
-			
+			ps.setLong(4, newuser.getMobileNumber()); 
+			 
 			ps.executeUpdate();
-			
+
 			Logger.info("User created Successfully");
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
 			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
@@ -51,6 +51,33 @@ public class UserDAO implements UserInterface{
 			ConnectionUtil.close(conn, ps);
 		}
 	}
+	
+	@Override
+	public void updateUser(User user) throws PersistanceException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			String query = "UPDATE users SET name = ?, city = ?, state = ?, pincode = ?, address = ? WHERE email = ? AND isActive = 1";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+		
+			ps.setString(1, user.getName());
+			ps.setString(2, user.getCity());
+			ps.setString(3, user.getState());
+			ps.setString(4, user.getPincode());
+			ps.setString(5, user.getAddress());
+			ps.setString(6, user.getEmail());
+			int rowsAffected = ps.executeUpdate();
+				if(rowsAffected > 0) {
+					Logger.info("User updated successfully");
+				}
+			} catch (SQLException e) {
+				throw new PersistanceException(e.getMessage());	
+			}
+			finally {
+				ConnectionUtil.close(conn, ps);
+			}
+}
 	
 	/**
 	 * Below the code for update the specific user password
@@ -90,16 +117,16 @@ public class UserDAO implements UserInterface{
 	 */
 	
 	@Override
-	public void delete(int userId) throws PersistanceException{
+	public void delete(String email) throws PersistanceException{
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "Update users SET isActive = 0 WHERE id = ?";
+			String query = "Update users SET isActive = 0 WHERE email = ?";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, userId);
+			ps.setString(1, email);
 			ps.executeUpdate();
 			
 			Logger.info("User deleted Successfully");
@@ -112,6 +139,7 @@ public class UserDAO implements UserInterface{
 			ConnectionUtil.close(conn, ps);
 		}
 	}
+	
 
 	/**
 	 * Below the code for update user name
@@ -141,8 +169,7 @@ public class UserDAO implements UserInterface{
 		}
 		finally {
 			ConnectionUtil.close(conn, ps);
-		}
-		
+		}	
 	}
 	
 	public void checkEmailExist(String userEmail) throws PersistanceException{
@@ -216,7 +243,7 @@ public class UserDAO implements UserInterface{
 	public boolean userLogin(String emailId, String password) throws PersistanceException, SQLException {
 	    try (Connection connection = ConnectionUtil.getConnection()) {
 	        if (emailExists(emailId, connection)) {
-	            String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ?";
+	            String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ? AND isActive = 1";
 	            try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
 	                psmt.setString(1, emailId);
 	                psmt.setString(2, password);
@@ -227,13 +254,13 @@ public class UserDAO implements UserInterface{
 	                        if (count > 0) {
 	                            return true;
 	                        } else {
-	                            throw new PersistanceException("Error while validating user credentials: Incorrect Password");
+	                            throw new PersistanceException("User not found");
 	                        }
 	                    }
 	                }
 	            }
 	        } else {
-	            throw new PersistanceException("Error while validating user credentials: Invalid Email Id");
+	            throw new PersistanceException("Invalid Email Id");
 	        }
 	    }
 	    return false;
@@ -262,4 +289,63 @@ public class UserDAO implements UserInterface{
         }
         return false;
     }
+	
+	@Override
+	public User findUserByEmail(String email) throws PersistanceException{
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User user = null;
+		
+		try {
+			String query = "SELECT id, name, email, mobileNumber, state, city, pincode, address FROM users WHERE email = ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1,email);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				user = new User();
+		
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+				user.setMobileNumber(rs.getLong("mobileNumber"));
+				user.setState(rs.getString("state"));
+				user.setCity(rs.getString("city"));
+				user.setPincode(rs.getString("pincode"));
+				user.setAddress(rs.getString("address"));
+				
+			}
+		} catch(SQLException e) {
+			Logger.info(e.getMessage());
+			throw new PersistanceException(e.getMessage());
+		}
+		finally {
+			ConnectionUtil.close(conn, ps, rs);
+		}
+		return user;
+		}
+
+	@Override
+	public int findUserIdByEmail(String email) throws PersistanceException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int userId;
+		try {
+			String query = "SELECT id FROM users WHERE email= ?";
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			userId = rs.getInt("id");
+			
+		}catch(SQLException e) {
+			Logger.info(e.getMessage());
+			throw new PersistanceException(e.getMessage());
+		}
+		return userId;
+	}
 }

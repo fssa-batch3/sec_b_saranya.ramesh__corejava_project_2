@@ -17,7 +17,6 @@ public class ProductDAO implements ProductInterface {
 
 	/**
 	 * Creates a new product in the database.
-	 *
 	 * @param product The Product object containing the information for the new product.
 	 * @throws PersistanceException 
 	 * @throws PersistanceException if there's an issue with database connectivity or SQL execution.
@@ -29,7 +28,7 @@ public class ProductDAO implements ProductInterface {
 		PreparedStatement ps = null;
    
 		try {
-			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1,product.getName());
@@ -45,11 +44,11 @@ public class ProductDAO implements ProductInterface {
 			ps.setString(11, product.getBenefits());
 			ps.setString(12, product.getHowToUse());
 			ps.setString(13, product.getShelfLife());
+			ps.setInt(14, product.getQuantity());
 			ps.executeUpdate();
 			Logger.info("Product created Successfully");
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
 			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
@@ -424,7 +423,6 @@ public class ProductDAO implements ProductInterface {
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
-			Logger.info(e.getMessage());
 			throw new PersistanceException(e.getMessage());
 		}
 		finally {
@@ -511,13 +509,10 @@ public class ProductDAO implements ProductInterface {
           	throw new PersistanceException("product doesn't exist");
           }		
 		} catch (SQLException e) {
-			
-//          e.printStackTrace();
-//          Logger.info(e.getMessage());
           throw new PersistanceException(e.getMessage());
       
       } finally {
           ConnectionUtil.close(con, ps);
-      }
+      } 
 	}	
 }

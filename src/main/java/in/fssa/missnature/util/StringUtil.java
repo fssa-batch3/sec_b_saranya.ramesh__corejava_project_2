@@ -5,7 +5,7 @@ import in.fssa.missnature.exception.ValidationException;
 public class StringUtil {
 
 	/**
-	 * 
+	 *  
 	 * @param input
 	 * @param inputName
 	 * @throws ValidationException

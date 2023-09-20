@@ -11,7 +11,7 @@ public class ProductValidator {
 
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\s]*$";
 	
-	/**
+	/**  
 	 * 
 	 * @param product
 	 * @throws ValidationException
@@ -23,7 +23,7 @@ public class ProductValidator {
 		if(product == null) {
 			throw new ValidationException("Invalid Product input");
 		}
-		
+		 
 		validateProductId1(product.getId());
 		validateName(product.getName());
 		validateNameAlreadyExist(product.getName());

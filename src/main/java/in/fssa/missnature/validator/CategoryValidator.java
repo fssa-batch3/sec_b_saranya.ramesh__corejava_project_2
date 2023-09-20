@@ -27,7 +27,7 @@ public class CategoryValidator {
 		if(category.getId() < 0) {
 			throw new ValidationException("Invalid category id");
 		}
-		
+
 		//Business validation
 		
 		 Connection con = null;
@@ -63,7 +63,7 @@ public class CategoryValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateName(String categoryName) throws ValidationException{
-		
+
 		if(categoryName == null || "".equals(categoryName.trim())) {
 			throw new ValidationException("Name cannot be null or empty");
 		}
@@ -106,7 +106,5 @@ public class CategoryValidator {
        } finally {
            ConnectionUtil.close(con, ps);
        }
-		
 	}
-	
 }

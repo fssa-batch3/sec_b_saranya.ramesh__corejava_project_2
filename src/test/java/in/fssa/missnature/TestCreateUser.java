@@ -8,6 +8,7 @@ import in.fssa.missnature.model.User;
 import in.fssa.missnature.service.UserService;
 import in.fssa.missnature.util.EmailAutoGenerator;
 import in.fssa.missnature.util.MobileNumberAutoGenerator;
+import in.fssa.missnature.exception.ServiceException;
 import in.fssa.missnature.exception.ValidationException;
 
 class TestCreateUser {
@@ -31,7 +32,7 @@ class TestCreateUser {
 	 void testCreateUserWithInvalidInput(){
 		
 			UserService userService = new UserService();
-			Exception exception = assertThrows(ValidationException.class, () ->{
+			Exception exception = assertThrows(ServiceException.class, () ->{
 				userService.createUser(null);
 			});
 		String expectedMessage = "User object cannot be null";
@@ -49,10 +50,10 @@ class TestCreateUser {
 		newUser.setEmail(null);
 		newUser.setName("Saranya");
 		newUser.setPassword("1234567456");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-		Exception exception = assertThrows(ValidationException.class, () ->{
+		Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Email cannot be null or empty";
@@ -68,10 +69,10 @@ class TestCreateUser {
 		newUser.setEmail(" ");
 		newUser.setName("Saranya");
 		newUser.setPassword("1234567456");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-			Exception exception = assertThrows(ValidationException.class, () ->{
+			Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Email cannot be null or empty";
@@ -85,13 +86,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("sarangmail.com");
+		newUser.setEmail("bhghv@hbvh");
 		newUser.setName("Saranya");
 		newUser.setPassword("1234567456");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-		Exception exception = assertThrows(ValidationException.class, () ->{
+		Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Email does not match the pattern";
@@ -105,13 +106,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("sara@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setName(null);
 		newUser.setPassword("1234567456");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-			Exception exception = assertThrows(ValidationException.class, () ->{
+			Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Name cannot be null or empty";
@@ -124,13 +125,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("sara@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setName("");
 		newUser.setPassword("1234567456");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-			Exception exception = assertThrows(ValidationException.class, () ->{
+			Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Name cannot be null or empty";
@@ -144,12 +145,12 @@ class TestCreateUser {
 		
 		User newUser = new User();
 		newUser.setName("@@@@");
-		newUser.setEmail("suji@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setPassword("1234567456");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-		Exception exception = assertThrows(ValidationException.class, () ->{
+		Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Name should contains only alphabets";
@@ -164,13 +165,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("Saran@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setName("Saranya");
 		newUser.setPassword(null);
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-			Exception exception = assertThrows(ValidationException.class, () ->{
+			Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Password cannot be null or empty";
@@ -185,13 +186,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("Saran@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setName("Saranya");
 		newUser.setPassword("");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-			Exception exception = assertThrows(ValidationException.class, () ->{
+			Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Password cannot be null or empty";
@@ -204,13 +205,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("siva@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setName("Saranya");
 		newUser.setPassword("saranyabwD");
-		newUser.setMobileNumber(987654321);
+		newUser.setMobileNumber(MobileNumberAutoGenerator.generate());
 		newUser.toString();
 			
-		Exception exception = assertThrows(ValidationException.class, () ->{
+		Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});			
 	String expectedMessage = "Password does not match the pattern";
@@ -224,13 +225,13 @@ class TestCreateUser {
 		UserService userService = new UserService();
 		
 		User newUser = new User();
-		newUser.setEmail("ujitha@gmail.com");
+		newUser.setEmail(EmailAutoGenerator.generateEmail());
 		newUser.setName("raji");
 		newUser.setPassword("Rajeshwari@123");
 		newUser.setMobileNumber(0000000000l);
 		newUser.toString();
-			
-		Exception exception = assertThrows(ValidationException.class, () ->{
+		
+		Exception exception = assertThrows(ServiceException.class, () ->{
 		userService.createUser(newUser);
 	});
 	String expectedMessage = "Invalid phone number";

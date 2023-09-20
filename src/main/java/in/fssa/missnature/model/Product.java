@@ -1,7 +1,7 @@
 package in.fssa.missnature.model;
 
 public class Product {
-
+	
 	private int id;
 	private String name;
 	private String description;
@@ -19,7 +19,14 @@ public class Product {
 	private ProductType productType;
 	private QuantityUnit quantityUnit;
 	private boolean isActive = true;
+	private int quantity;
 	
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	public enum ProductType{
 		TONER, SERUM, FACE_WASH, CREAMS, OTHERS
 	}
@@ -127,7 +134,7 @@ public class Product {
 	}
 	public boolean isActive() {
 		return isActive;
-	}
+	} 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}

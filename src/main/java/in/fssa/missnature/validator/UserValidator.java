@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import in.fssa.missnature.util.*;
 import in.fssa.missnature.dao.UserDAO;
@@ -34,6 +35,7 @@ public class UserValidator {
 
         validateName(user.getName());
         validateEmail(user.getEmail());
+        checkEmailAlreadyExist(user.getEmail());
         validatePassword(user.getPassword()); 
         validateMobileNumber(user.getMobileNumber());
 
@@ -99,7 +101,10 @@ public class UserValidator {
         userDAO.checkMobileNumberExist(mobileNumber);
         
     }
-    
+    /**
+     * @param userName
+     * @throws ValidationException
+     */
     public  void validateName(String userName) throws ValidationException {
         
         StringUtil.rejectIfInvalidString(userName, "Name");
@@ -113,27 +118,34 @@ public class UserValidator {
      * 
      * @param email
      * @throws ValidationException
-     * @throws PersistanceException 
      */
     
-    public void validateEmail(String userEmail) throws ValidationException, PersistanceException {
+    public void validateEmail(String userEmail) throws ValidationException {
         
         StringUtil.rejectIfInvalidString(userEmail, "Email");
         
         if (!Pattern.matches(EMAIL_PATTERN, userEmail)) {
             throw new ValidationException("Email does not match the pattern");
         }
-        
-        UserDAO userDAO = new UserDAO();
+               
+    }
+    
+    /**
+     * @param userEmail
+     * @throws ValidationException
+     * @throws PersistanceException
+     */
+    public void checkEmailAlreadyExist(String userEmail)throws ValidationException, PersistanceException{
+    	
+    	UserDAO userDAO = new UserDAO();
         userDAO.checkEmailExist(userEmail);
-        
+
     }
     /**
-     * 
      * @param password
      * @throws ValidationException
      */
-    public  void validatePassword(String userPassword) throws ValidationException {
+    public void validatePassword(String userPassword) throws ValidationException {
         
         StringUtil.rejectIfInvalidString(userPassword, "Password");
         
@@ -146,4 +158,52 @@ public class UserValidator {
         }
     }
     
-	}
+    // below the code to validate address null or empty string
+    
+    public void validateAddress(String userAddress)throws ValidationException{
+    	
+    	StringUtil.rejectIfInvalidString(userAddress, "userAddress");	
+    }
+    
+    /**
+     * below the code to validate pincode
+     * @param userPincode
+     * @throws ValidationException
+     */
+    public void validatePincode(String userPincode) throws ValidationException{
+    	
+    	String pinCodePattern = "^[1-9][0-9]{5}$";
+    	
+    	Pattern pattern = Pattern.compile(pinCodePattern);
+        Matcher matcher = pattern.matcher(userPincode);
+        
+        if(!matcher.matches()) {
+        	throw new ValidationException("pincode does not match the pattern");
+        }
+    }
+    
+    /**
+     * below the code to validate city name
+     * @param userCity
+     * @throws ValidationException
+     */
+    public void validateCity(String userCity)throws ValidationException{
+    	
+    	StringUtil.rejectIfInvalidString(userCity, "userCity");
+    	
+    	 String cityPattern = "^[a-zA-Z\\s\\-'’]+$";
+    	    int minLength = 2;
+    	    int maxLength = 50;
+    	    if(!userCity.matches(cityPattern) && userCity.length() >= minLength && userCity.length() <= maxLength) {
+    	    	throw new ValidationException("city name does not match the pattern");
+    	    }
+    }
+    
+    public void validateState(String state) throws ValidationException{
+    	
+    	String statePattern = "^[A-Za-z\\s.'-]+$";
+    	if(!state.matches(statePattern)) {
+    		throw new ValidationException("Invalid state name");
+    	}
+    }
+}
