@@ -202,6 +202,37 @@ public class UserDAO implements UserInterface{
         }
 	}
 	
+public void checkEmailExistForLogin(String userEmail) throws PersistanceException{
+		
+		Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try {
+            
+            String query = "SELECT name, email FROM users WHERE isActive=1 AND email=?";
+            con = ConnectionUtil.getConnection();
+            ps = con.prepareStatement(query);
+            ps.setString(1, userEmail);
+            rs = ps.executeQuery();
+            
+            while(!rs.next()) {
+                throw new PersistanceException("Invalid credentials");
+            }
+        
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+            Logger.info(e.getMessage());
+            throw new PersistanceException(e.getMessage());
+        
+        } finally {
+            
+            ConnectionUtil.close(con, ps, rs);   
+        }
+	}
+	
+	
 	public void checkMobileNumberExist (long mobileNumber)throws PersistanceException{
 		
 		Connection con = null;
@@ -231,65 +262,99 @@ public class UserDAO implements UserInterface{
         }
 	}
 	
-	/**
-	 *
-	 * @param emailId
-	 * @param password
-	 * @return
-	 * @throws PersistanceException
-	 * @throws SQLException
-	 */
-	
-	public boolean userLogin(String emailId, String password) throws PersistanceException, SQLException {
-	    try (Connection connection = ConnectionUtil.getConnection()) {
-	        if (emailExists(emailId, connection)) {
-	            String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ? AND isActive = 1";
-	            try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
-	                psmt.setString(1, emailId);
-	                psmt.setString(2, password);
-
-	                try (ResultSet rs = psmt.executeQuery()) {
-	                    if (rs.next()) {
-	                        int count = rs.getInt(1);
-	                        if (count > 0) {
-	                            return true;
-	                        } else {
-	                            throw new PersistanceException("User not found");
-	                        }
-	                    }
-	                }
-	            }
-	        } else {
-	            throw new PersistanceException("Invalid Email Id");
-	        }
-	    }
-	    return false;
-	}
-
-	 
-	/**
-	 * 
-	 * @param email
-	 * @param connection
-	 * @return
-	 * @throws PersistanceException
-	 */
-	 
-	private boolean emailExists(String email, Connection connection) throws PersistanceException {
-        String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ?";
-        try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
-            psmt.setString(1, email);
-            try (ResultSet rs = psmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-        } catch (SQLException e) {
-            throw new PersistanceException("Error while checking email existence: " + e.getMessage());
+	public User userLogin(String email) throws PersistanceException{
+		
+		Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        User user = null;
+        try {
+        	String query = "SELECT id, name, email, mobileNumber, password, state, city, pincode, address FROM users WHERE isActive = 1 AND email = ?";
+        	con = ConnectionUtil.getConnection();
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            	if(rs.next()) {
+            		user = new User();
+            		user.setId(rs.getInt("id"));
+    				user.setName(rs.getString("name"));
+    				user.setEmail(rs.getString("email"));
+    				user.setMobileNumber(rs.getLong("mobileNumber"));
+    				user.setPassword(rs.getString("password"));
+    				user.setState(rs.getString("state"));
+    				user.setCity(rs.getString("city"));
+    				user.setPincode(rs.getString("pincode"));
+    				user.setAddress(rs.getString("address"));
+            	}
+        }catch (SQLException e) {
+        	
+        	throw new PersistanceException(e.getMessage());
+        }	
+        finally {
+        		ConnectionUtil.close(con, ps, rs);
         }
-        return false;
-    }
+		return user;
+	}
 	
+//	/**
+//	 *
+//	 * @param emailId
+//	 * @param password
+//	 * @return
+//	 * @throws PersistanceException
+//	 * @throws SQLException
+//	 */
+//	
+//	public boolean userLogin(String emailId, String password) throws PersistanceException, SQLException {
+//	    try (Connection connection = ConnectionUtil.getConnection()) {
+//	        if (emailExists(emailId, connection)) {
+//	            String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ? AND isActive = 1";
+//	            try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
+//	                psmt.setString(1, emailId);
+//	                psmt.setString(2, password);
+//
+//	                try (ResultSet rs = psmt.executeQuery()) {
+//	                    if (rs.next()) {
+//	                        int count = rs.getInt(1);
+//	                        if (count > 0) {
+//	                            return true;
+//	                        } else {
+//	                            throw new PersistanceException("User not found");
+//	                        }
+//	                    }
+//	                }
+//	            }
+//	        } else {
+//	            throw new PersistanceException("Invalid Email Id");
+//	        }
+//	    }
+//	    return false;
+//	}
+//
+//	 
+//	/**
+//	 * 
+//	 * @param email
+//	 * @param connection
+//	 * @return
+//	 * @throws PersistanceException
+//	 */
+//	 
+//	private boolean emailExists(String email, Connection connection) throws PersistanceException {
+//        String selectQuery = "SELECT COUNT(*) FROM users WHERE email = ?";
+//        try (PreparedStatement psmt = connection.prepareStatement(selectQuery)) {
+//            psmt.setString(1, email);
+//            try (ResultSet rs = psmt.executeQuery()) {
+//                if (rs.next()) {
+//                    return rs.getInt(1) > 0;
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new PersistanceException("Error while checking email existence: " + e.getMessage());
+//        }
+//        return false;
+//    }
+//	
 	@Override
 	public User findUserByEmail(String email) throws PersistanceException{
 		
@@ -307,7 +372,7 @@ public class UserDAO implements UserInterface{
 			
 			if(rs.next()) {
 				user = new User();
-		
+				
 				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
@@ -328,24 +393,4 @@ public class UserDAO implements UserInterface{
 		return user;
 		}
 
-	@Override
-	public int findUserIdByEmail(String email) throws PersistanceException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int userId;
-		try {
-			String query = "SELECT id FROM users WHERE email= ?";
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setString(1, email);
-			rs = ps.executeQuery();
-			userId = rs.getInt("id");
-			
-		}catch(SQLException e) {
-			Logger.info(e.getMessage());
-			throw new PersistanceException(e.getMessage());
-		}
-		return userId;
-	}
 }

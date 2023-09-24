@@ -68,7 +68,7 @@ public class UserService {
 			throw new ServiceException(e.getMessage());
 		}
 	}
- 
+	
 	/**
 	 * 
 	 * @param id
@@ -124,5 +124,18 @@ public class UserService {
 		}
 		return user;
 	}
+	
+	public User loginUser (String email) throws ServiceException, ValidationException{
+		UserValidator userValidator = new UserValidator();
+		UserDAO userDAO = new UserDAO();
+		User user;
+		try {
+			userValidator.emailExistForLogin(email);
+			user = userDAO.userLogin(email);
+		}
+		catch(PersistanceException | ValidationException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		return user;
+	}
 }
-

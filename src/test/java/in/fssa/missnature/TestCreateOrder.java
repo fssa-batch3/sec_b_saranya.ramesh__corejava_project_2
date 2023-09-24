@@ -2,9 +2,13 @@ package in.fssa.missnature;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
+import in.fssa.missnature.logger.Logger;
 import in.fssa.missnature.model.Orders;
+import in.fssa.missnature.model.Product;
 import in.fssa.missnature.service.OrderService;
 
 public class TestCreateOrder {
@@ -20,5 +24,18 @@ public class TestCreateOrder {
 		assertDoesNotThrow(() ->{
 			orderService.createOrder(order);
 		});
+	}
+	
+	@Test
+	 void listOrder() {
+		
+		OrderService orderService = new OrderService();
+		Set<Orders> orders;
+		try {
+	        orders = orderService.listOrders();
+	        System.out.println(orders);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 }

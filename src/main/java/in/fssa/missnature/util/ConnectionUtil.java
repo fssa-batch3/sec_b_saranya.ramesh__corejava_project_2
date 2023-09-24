@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 //import io.github.cdimascio.dotenv.Dotenv;
 
+import in.fssa.missnature.logger.Logger;
+
 public class ConnectionUtil {
 	/**
 	 * 
@@ -24,10 +26,13 @@ public class ConnectionUtil {
 //		password = System.getenv("DATABASE_PASSWORD");
 	
 //    	 local 
-	  url = "jdbc:mysql://164.52.216.41:3306/saranya_ramesh__corejava_project";
-	  userName = "13WSR0mXUsnO"; 
-	  password = "7231823c-1c64-446b-9f0b-aa0a287ef8f5";
+//	  url = "jdbc:mysql://164.52.216.41:3306/saranya_ramesh__corejava_project";
+//	  userName = "13WSR0mXUsnO"; 
+//	  password = "7231823c-1c64-446b-9f0b-aa0a287ef8f5";
 
+		url = "jdbc:mysql://localhost:3306/saranya_ramesh__corejava_project"; 
+		userName = "root"; 
+		password = "123456";
 	
 //	
 //	url = "";
@@ -39,6 +44,8 @@ public class ConnectionUtil {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			 connection = DriverManager.getConnection(url,userName,password);
+			 Logger.info("connection success");
+			 
 		} 
 		catch(Exception e){
 			e.printStackTrace();
@@ -85,6 +92,9 @@ public class ConnectionUtil {
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public static void main(String[] args) {
+		getConnection();
 	}
 
 }

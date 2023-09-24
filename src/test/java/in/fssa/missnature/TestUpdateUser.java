@@ -41,7 +41,7 @@ import in.fssa.missnature.service.UserService;
 		UserService userService = new UserService();
 		User updateUser = new User();
 		updateUser.setName("saran");
-		updateUser.setEmail("saran@gmail.com");
+		updateUser.setEmail("sujitha@gmail.com");
 		updateUser.setMobileNumber(98765456789l);
 		updateUser.setCity("chenai");
 		updateUser.setAddress("4/451, shanmuga sundharam street,  ranga nagar extension, old perungalathur, chennai - 63.");

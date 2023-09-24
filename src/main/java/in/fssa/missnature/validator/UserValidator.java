@@ -130,6 +130,7 @@ public class UserValidator {
                
     }
     
+    
     /**
      * @param userEmail
      * @throws ValidationException
@@ -140,6 +141,12 @@ public class UserValidator {
     	UserDAO userDAO = new UserDAO();
         userDAO.checkEmailExist(userEmail);
 
+    }
+    
+    public void emailExistForLogin(String email)throws ValidationException, PersistanceException{
+    	
+    	UserDAO userDAO = new UserDAO();
+    	userDAO.checkEmailExistForLogin(email);
     }
     /**
      * @param password

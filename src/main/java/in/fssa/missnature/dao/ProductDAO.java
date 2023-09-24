@@ -23,12 +23,12 @@ public class ProductDAO implements ProductInterface {
 	 */
 	
 	public void create(Product product) throws PersistanceException {
-		
+		 
 		Connection conn = null;
 		PreparedStatement ps = null;
    
 		try {
-			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO products (name,categoryId, description, weight,quantityUnit, price, image, skinType, productType, ingredients, benefits, howToUse, shelfLife, quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1,product.getName());
